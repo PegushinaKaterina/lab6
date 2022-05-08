@@ -2,229 +2,131 @@ package katya.client.state;
 
 import katya.common.entites.HumanBeing;
 
-import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 public class ConsoleGeneratorHumanBeing extends State {
-
-    void setName() {
-
-    }
-
-    void setCoordinates() {
-
-    }
-
-    void setRealHero() {
-
-    }
-
-    void setHasToothpick() {
-
-    }
-
-    void setImpactSpeed() {
-
-    }
-
-    void setSoundtrackName() {
-
-    }
-
-    void setMinutesOfWaiting() {
-
-    }
-
-    void setWeaponType() {
-
-    }
-
-    void setCar() {
-
-    }
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    void generateHumanBeingFields() {
-
-    }
-
-    @Override
-    boolean isCorrect() {
-        return false;
-    }
-
-    @Override
-    void errorHandler() {
-
-    }
-}
-    /*
-    private Scanner scanner = new Scanner(System.in);
-
-    private <T> T setValue(String message,
-                           String description,
-                           boolean nullable,
-                           Function<String, T> function,
-                           Predicate<Object> predicate,
-                           String error) {
-        System.out.println(message + ", " + description);
-        boolean isRunning = true;
-        T value = null;
-        while (isRunning) {
-            try {
-                String string = scanner.nextLine();
-                value = Parser.valueParser(string, description, nullable, function, predicate, error);
-                isRunning = false;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage() + ".\nПовторите ввод");
-                continue;
-            } catch (NoSuchElementException e) {
-                System.out.println("Введен недопустимый символ");
-                System.exit(1);
-            }
-        }
-        return value;
-    }
-
-    private String setValue(String message,
-                            boolean nullable) {
-        System.out.println(message);
-        boolean isRunning = true;
-        String value = null;
-        while (isRunning) {
-            try {
-                String string = scanner.nextLine();
-                value = Parser.valueParser(string, nullable);
-                isRunning = false;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage() + ".\nПовторите ввод");
-                continue;
-            } catch (NoSuchElementException e) {
-                System.out.println("Введен недопустимый символ");
-                System.exit(1);
-            }
-        }
-        return value;
-    }
-
-
-    private <T> T setValue(String message,
-                           String description,
-                           boolean nullable,
-                           Function<String, T> function) {
-        System.out.println(message + ", " + description);
-        boolean isRunning = true;
-        T value = null;
-        while (isRunning) {
-            try {
-                String string = scanner.nextLine();
-                value = Parser.valueParser(string, description, nullable, function);
-                isRunning = false;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage() + ".\nПовторите ввод");
-                continue;
-            } catch (NoSuchElementException e) {
-                System.out.println("Введен недопустимый символ");
-                System.exit(1);
-            }
-        }
-        return value;
-    }
-    @Override
-    public void setName() {
-        super.name = setValue("Введите имя",
-                false);
-    }
-
-    @Override
-    public void setCoordinates() {
-
-    }
-
-    @Override
-    public void setCoordinate() {
-        super.x = setValue("Введите координату X",
-                "значение должно быть целым числом не больше " + HumanBeing.Coordinates.X_MAX,
-                false,
-                Integer::parseInt,
-                arg -> (int) arg < HumanBeing.Coordinates.X_MAX,
-                "Координата X должна быть не больше " + HumanBeing.Coordinates.X_MAX);
-
-        super.y = setValue("Введите координату Y",
-                "значение должно быть целым числом",
-                false,
-                Integer::parseInt);
-    }
-
-    @Override
-    public void setRealHero() {
-        super.realHero = setValue("Это реальный герой или нет?",
-                "значение должно быть Да или Нет",
-                false,
-                CheckBoolean::checkBoolean);
-    }
-
-    @Override
-    public void setHasToothpick() {
-        super.hasToothpick = setValue("У героя есть зубочистка?",
-                "значение должно быть Да или Нет",
-                false,
-                CheckBoolean::checkBoolean);
-    }
-
-    @Override
-    public void setImpactSpeed() {
-        super.impactSpeed = setValue("Введите скорость удара",
-                "значение должно быть вещественным числом и больше " + HumanBeing.IMPACT_SPEED_MIN,
-                false,
-                Double::parseDouble,
-                arg -> (Double) arg > HumanBeing.IMPACT_SPEED_MIN,
-                "Значение должно быть больше " + HumanBeing.IMPACT_SPEED_MIN);
-    }
-
-    @Override
-    public void setSoundtrackName() {
-        super.soundtrackName = setValue("Введите название саундтрека",
-                false);
-    }
-    @Override
-    public void setMinutesOfWaiting() {
-        super.minutesOfWaiting = setValue("Введите время ожидания",
-                "значение должно быть целым числом",
-                false,
-                Integer::valueOf);
-    }
-    @Override
-    public void setWeaponType() {
-        super.weaponType = setValue("Введите тип оружия",
-                "допустимые значения: \n" + HumanBeing.WeaponType.show() + "регистр должен сохраняться",
-                false,
-                HumanBeing.WeaponType::valueOf);
-    }
-    @Override
-    public void setCar() {
-        super.cool = setValue("Машина крутая?",
-                "значение должно быть Да или Нет. Если хотите оставить это значение, пустым нажмите enter",
-                true,
-                CheckBoolean::checkBoolean);
+    protected void generateHumanBeingFields() {
+        setValue("Введите имя",
+                this::setName);
+        setValue("Введите координату X" +
+                        "значение должно быть целым числом не больше " + HumanBeing.Coordinates.X_MAX,
+                this::setX);
+        setValue("Введите координату Y" + "значение должно быть целым числом",
+                this::setY);
+        setValue("Это реальный герой или нет?" + "значение должно быть Да или Нет",
+                this::setRealHero);
+        setValue("У героя есть зубочистка?" + "значение должно быть Да или Нет",
+                this::setHasToothpick);
+        setValue("Введите скорость удара" +
+                        "значение должно быть вещественным числом и больше " + HumanBeing.IMPACT_SPEED_MIN,
+                this::setImpactSpeed);
+        setValue("Введите название саундтрека",
+                this::setSoundtrackName);
+        setValue("Введите время ожидания" + "значение должно быть целым числом",
+                this::setMinutesOfWaiting);
+        setValue("Введите тип оружия" +
+                        "допустимые значения: \n" + HumanBeing.WeaponType.show() + "регистр должен сохраняться",
+                this::setWeaponType);
+        setValue("Машина крутая?" +
+                        "значение должно быть Да или Нет. Если хотите оставить это значение, пустым нажмите enter",
+                this::setCar);
     }
 
     @Override
     public boolean isCorrect() {
-        return false;
+        return true;
     }
 
-    @Override
-    public void errorHandler() {
+    public void setValue(String message, Runnable runnable) {
+        System.out.println(message);
+        boolean isRunning = true;
+        while (isRunning) {
+            try {
+                runnable.run();
+                isRunning = false;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage() + "повторите ввод");
+            }
+        }
+    }
+
+    public void setName() throws IllegalArgumentException {
+        super.name = new ValueSetter<String>(scanner)
+                .withCheckingNull(false)
+                .getValue();
 
     }
 
-    @Override
-    public HumanBeing generateHumanBeing() {
-        return null
-        }
-        }
+    public void setX() throws IllegalArgumentException {
+        super.x = new ValueSetter<Integer>(scanner)
+                .withCheckingNull(false)
+                .withCheckingFunction(Integer::parseInt, "значение координаты X должно быть целым числом")
+                .withCheckingPredicate(arg -> (int) arg < HumanBeing.Coordinates.X_MAX,
+                        "Значение координаты X должно быть не больше " + HumanBeing.Coordinates.X_MAX)
+                .getValue();
+    }
 
-     */
+    public void setY() throws IllegalArgumentException {
+        super.y = new ValueSetter<Integer>(scanner)
+                .withCheckingNull(false)
+                .withCheckingFunction(Integer::parseInt, "значение координаты Y должно быть целым числом")
+                .getValue();
+    }
+
+    public void setRealHero() throws IllegalArgumentException {
+        super.realHero = new ValueSetter<Boolean>(scanner)
+                .withCheckingNull(false)
+                .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"Это реальный герой\" должно быть Да или Нет")
+                .getValue();
+    }
+
+    public void setHasToothpick() throws IllegalArgumentException {
+        super.hasToothpick = new ValueSetter<Boolean>(scanner)
+                .withCheckingNull(false)
+                .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"У человека есть зубочистка\" должно быть Да или Нет")
+                .getValue();
+    }
+
+    public void setImpactSpeed() throws IllegalArgumentException {
+        super.impactSpeed = new ValueSetter<Double>(scanner)
+                .withCheckingNull(false)
+                .withCheckingFunction(Double::parseDouble, "значение скорости удара должно быть вещественным числом")
+                .withCheckingPredicate(arg -> (Double) arg > HumanBeing.IMPACT_SPEED_MIN,
+                        "Значение скорости удара должно быть больше " + HumanBeing.IMPACT_SPEED_MIN)
+                .getValue();
+
+    }
+
+    public void setSoundtrackName() throws IllegalArgumentException {
+        super.soundtrackName = new ValueSetter<String>(scanner)
+                .withCheckingNull(false)
+                .getValue();
+    }
+
+    public void setMinutesOfWaiting() throws IllegalArgumentException {
+        super.minutesOfWaiting = new ValueSetter<Integer>(scanner)
+                .withCheckingNull(false)
+                .withCheckingFunction(Integer::parseInt, "значение времени ожидания должно быть целым числом")
+                .getValue();
+    }
+
+    public void setWeaponType() throws IllegalArgumentException {
+        super.weaponType = new ValueSetter<HumanBeing.WeaponType>(scanner)
+                .withCheckingNull(false)
+                .withCheckingFunction(HumanBeing.WeaponType::valueOf,
+                        "тип оружия должен быть из списка: \n" + HumanBeing.WeaponType.show() + "Регистр должен сохраняться")
+                .getValue();
+
+    }
+
+    public void setCar() throws IllegalArgumentException {
+        super.cool = new ValueSetter<Boolean>(scanner)
+                .withCheckingNull(true)
+                .withCheckingFunction(CheckBoolean::checkBoolean,
+                        "значение \"У человека есть крутая машина\" должно быть Да или Нет, или быть пустым")
+                .getValue();
+    }
+}

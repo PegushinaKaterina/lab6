@@ -16,9 +16,7 @@ public abstract class State {
 
     protected abstract void generateHumanBeingFields();
 
-    abstract boolean isCorrect();
-
-    abstract void errorHandler();
+    public abstract boolean isCorrect();
 
     public String getName() {
         return name;

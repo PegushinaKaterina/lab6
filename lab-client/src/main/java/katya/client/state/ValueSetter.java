@@ -1,17 +1,31 @@
 package katya.client.state;
 
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class valueSetter<T> {
+public class ValueSetter<T> {
     private String string;
     private T value;
 
-    public valueSetter(String string) {
+    public ValueSetter(String string) {
         this.string = string;
     }
+    public ValueSetter(Scanner scanner) {
+        try {
+            this.string = scanner.nextLine();
+        }catch (NoSuchElementException e) {
+            System.out.println("Введен недопустимый символ");
+            System.exit(1);
+        }
 
-    public valueSetter withCheckingNull(boolean nullable) {
+    }
+
+    public ValueSetter(Object o) {
+    }
+
+    public ValueSetter<T> withCheckingNull(boolean nullable) {
         if ("".equals(string)) {
             if (nullable) {
                 value = null;
@@ -22,7 +36,7 @@ public class valueSetter<T> {
         return this;
     }
 
-    public valueSetter withCheckingFunction(Function<String, T> function, String description) {
+    public ValueSetter<T> withCheckingFunction(Function<String, T> function, String description) {
         if (!"".equals(string)) {
             try {
                 value = function.apply(string);
@@ -33,7 +47,7 @@ public class valueSetter<T> {
         return this;
     }
 
-    public valueSetter withCheckingPredicate(Predicate<Object> predicate, String error) {
+    public ValueSetter<T> withCheckingPredicate(Predicate<Object> predicate, String error) {
         if (!"".equals(string)) {
             if (!predicate.test(value)) {
                 throw new IllegalArgumentException(error);
@@ -43,10 +57,9 @@ public class valueSetter<T> {
     }
 
     public T getValue() {
-        if (value.getClass().equals(String.class) && !"".equals(string)){
+        if (value.getClass().equals(String.class) && !"".equals(string)) {
             value = (T) string;
         }
         return value;
     }
 }
-

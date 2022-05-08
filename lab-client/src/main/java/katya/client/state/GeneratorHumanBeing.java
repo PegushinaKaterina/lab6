@@ -29,7 +29,7 @@ public class GeneratorHumanBeing {
                     .withCar(state.getCool())
                     .build();
         } else {
-           state.errorHandler();
+            throw new IllegalArgumentException();
         }
         return humanBeing;
     }
