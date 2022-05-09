@@ -1,10 +1,10 @@
 package katya.client.state;
 
+import katya.client.CheckBoolean;
+import katya.client.Validator;
 import katya.common.entites.HumanBeing;
 
 import java.util.ArrayDeque;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 public class FileGeneratorHumanBeing extends State {
     ArrayDeque<String> errors = new ArrayDeque<String>();
@@ -44,7 +44,7 @@ public class FileGeneratorHumanBeing extends State {
 
     public void setName() {
         try {
-            super.name = new ValueSetter<String>(stringHumanBeing[0])
+            super.name = new Validator<String>(stringHumanBeing[0])
                     .withCheckingNull(false)
                     .getValue();
         } catch (IllegalArgumentException e) {
@@ -54,7 +54,7 @@ public class FileGeneratorHumanBeing extends State {
 
     public void setCoordinates() {
         try {
-            super.x = new ValueSetter<Integer>(stringHumanBeing[1])
+            super.x = new Validator<Integer>(stringHumanBeing[1])
                     .withCheckingNull(false)
                     .withCheckingFunction(Integer::parseInt, "значение координаты X должно быть целым числом")
                     .withCheckingPredicate(arg -> (int) arg < HumanBeing.Coordinates.X_MAX,
@@ -64,7 +64,7 @@ public class FileGeneratorHumanBeing extends State {
             errors.add(e.getMessage());
         }
         try {
-            super.y = new ValueSetter<Integer>(stringHumanBeing[2])
+            super.y = new Validator<Integer>(stringHumanBeing[2])
                     .withCheckingNull(false)
                     .withCheckingFunction(Integer::parseInt, "значение координаты Y должно быть целым числом")
                     .getValue();
@@ -75,7 +75,7 @@ public class FileGeneratorHumanBeing extends State {
 
     public void setRealHero() {
         try {
-            super.realHero = new ValueSetter<Boolean>(stringHumanBeing[3])
+            super.realHero = new Validator<Boolean>(stringHumanBeing[3])
                     .withCheckingNull(false)
                     .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"Это реальный герой\" должно быть Да или Нет")
                     .getValue();
@@ -86,7 +86,7 @@ public class FileGeneratorHumanBeing extends State {
 
     public void setHasToothpick() {
         try {
-            super.hasToothpick = new ValueSetter<Boolean>(stringHumanBeing[4])
+            super.hasToothpick = new Validator<Boolean>(stringHumanBeing[4])
                     .withCheckingNull(false)
                     .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"У человека есть зубочистка\" должно быть Да или Нет")
                     .getValue();
@@ -97,7 +97,7 @@ public class FileGeneratorHumanBeing extends State {
 
     public void setImpactSpeed() {
         try {
-            super.impactSpeed = new ValueSetter<Double>(stringHumanBeing[5])
+            super.impactSpeed = new Validator<Double>(stringHumanBeing[5])
                     .withCheckingNull(false)
                     .withCheckingFunction(Double::parseDouble, "значение скорости удара должно быть вещественным числом")
                     .withCheckingPredicate(arg -> (Double) arg > HumanBeing.IMPACT_SPEED_MIN,
@@ -110,7 +110,7 @@ public class FileGeneratorHumanBeing extends State {
 
     public void setSoundtrackName() {
         try {
-            super.soundtrackName = new ValueSetter<String>(stringHumanBeing[6])
+            super.soundtrackName = new Validator<String>(stringHumanBeing[6])
                     .withCheckingNull(false)
                     .getValue();
         } catch (IllegalArgumentException e) {
@@ -120,7 +120,7 @@ public class FileGeneratorHumanBeing extends State {
 
     public void setMinutesOfWaiting() {
         try {
-            super.minutesOfWaiting = new ValueSetter<Integer>(stringHumanBeing[7])
+            super.minutesOfWaiting = new Validator<Integer>(stringHumanBeing[7])
                     .withCheckingNull(false)
                     .withCheckingFunction(Integer::parseInt, "значение времени ожидания должно быть целым числом")
                     .getValue();
@@ -131,7 +131,7 @@ public class FileGeneratorHumanBeing extends State {
 
     public void setWeaponType() {
         try {
-            super.weaponType = new ValueSetter<HumanBeing.WeaponType>(stringHumanBeing[8])
+            super.weaponType = new Validator<HumanBeing.WeaponType>(stringHumanBeing[8])
                     .withCheckingNull(false)
                     .withCheckingFunction(HumanBeing.WeaponType::valueOf,
                             "тип оружия должен быть из списка: \n" + HumanBeing.WeaponType.show() + "Регистр должен сохраняться")
@@ -143,7 +143,7 @@ public class FileGeneratorHumanBeing extends State {
 
     public void setCar() {
         try {
-            super.cool = new ValueSetter<Boolean>(stringHumanBeing[9])
+            super.cool = new Validator<Boolean>(stringHumanBeing[9])
                     .withCheckingNull(true)
                     .withCheckingFunction(CheckBoolean::checkBoolean,
                             "значение \"У человека есть крутая машина\" должно быть Да или Нет, или быть пустым")

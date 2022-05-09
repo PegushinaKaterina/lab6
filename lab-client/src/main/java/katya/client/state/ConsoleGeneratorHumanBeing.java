@@ -1,5 +1,7 @@
 package katya.client.state;
 
+import katya.client.CheckBoolean;
+import katya.client.Validator;
 import katya.common.entites.HumanBeing;
 
 import java.util.Scanner;
@@ -54,14 +56,13 @@ public class ConsoleGeneratorHumanBeing extends State {
     }
 
     public void setName() throws IllegalArgumentException {
-        super.name = new ValueSetter<String>(scanner)
+        super.name = new Validator<String>(scanner)
                 .withCheckingNull(false)
                 .getValue();
-
     }
 
     public void setX() throws IllegalArgumentException {
-        super.x = new ValueSetter<Integer>(scanner)
+        super.x = new Validator<Integer>(scanner)
                 .withCheckingNull(false)
                 .withCheckingFunction(Integer::parseInt, "значение координаты X должно быть целым числом")
                 .withCheckingPredicate(arg -> (int) arg < HumanBeing.Coordinates.X_MAX,
@@ -70,28 +71,28 @@ public class ConsoleGeneratorHumanBeing extends State {
     }
 
     public void setY() throws IllegalArgumentException {
-        super.y = new ValueSetter<Integer>(scanner)
+        super.y = new Validator<Integer>(scanner)
                 .withCheckingNull(false)
                 .withCheckingFunction(Integer::parseInt, "значение координаты Y должно быть целым числом")
                 .getValue();
     }
 
     public void setRealHero() throws IllegalArgumentException {
-        super.realHero = new ValueSetter<Boolean>(scanner)
+        super.realHero = new Validator<Boolean>(scanner)
                 .withCheckingNull(false)
                 .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"Это реальный герой\" должно быть Да или Нет")
                 .getValue();
     }
 
     public void setHasToothpick() throws IllegalArgumentException {
-        super.hasToothpick = new ValueSetter<Boolean>(scanner)
+        super.hasToothpick = new Validator<Boolean>(scanner)
                 .withCheckingNull(false)
                 .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"У человека есть зубочистка\" должно быть Да или Нет")
                 .getValue();
     }
 
     public void setImpactSpeed() throws IllegalArgumentException {
-        super.impactSpeed = new ValueSetter<Double>(scanner)
+        super.impactSpeed = new Validator<Double>(scanner)
                 .withCheckingNull(false)
                 .withCheckingFunction(Double::parseDouble, "значение скорости удара должно быть вещественным числом")
                 .withCheckingPredicate(arg -> (Double) arg > HumanBeing.IMPACT_SPEED_MIN,
@@ -101,20 +102,20 @@ public class ConsoleGeneratorHumanBeing extends State {
     }
 
     public void setSoundtrackName() throws IllegalArgumentException {
-        super.soundtrackName = new ValueSetter<String>(scanner)
+        super.soundtrackName = new Validator<String>(scanner)
                 .withCheckingNull(false)
                 .getValue();
     }
 
     public void setMinutesOfWaiting() throws IllegalArgumentException {
-        super.minutesOfWaiting = new ValueSetter<Integer>(scanner)
+        super.minutesOfWaiting = new Validator<Integer>(scanner)
                 .withCheckingNull(false)
                 .withCheckingFunction(Integer::parseInt, "значение времени ожидания должно быть целым числом")
                 .getValue();
     }
 
     public void setWeaponType() throws IllegalArgumentException {
-        super.weaponType = new ValueSetter<HumanBeing.WeaponType>(scanner)
+        super.weaponType = new Validator<HumanBeing.WeaponType>(scanner)
                 .withCheckingNull(false)
                 .withCheckingFunction(HumanBeing.WeaponType::valueOf,
                         "тип оружия должен быть из списка: \n" + HumanBeing.WeaponType.show() + "Регистр должен сохраняться")
@@ -123,7 +124,7 @@ public class ConsoleGeneratorHumanBeing extends State {
     }
 
     public void setCar() throws IllegalArgumentException {
-        super.cool = new ValueSetter<Boolean>(scanner)
+        super.cool = new Validator<Boolean>(scanner)
                 .withCheckingNull(true)
                 .withCheckingFunction(CheckBoolean::checkBoolean,
                         "значение \"У человека есть крутая машина\" должно быть Да или Нет, или быть пустым")

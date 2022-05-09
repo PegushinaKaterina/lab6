@@ -1,4 +1,4 @@
-package katya.client.state;
+package katya.client;
 
 import katya.common.entites.HumanBeing;
 

@@ -14,18 +14,6 @@ public class Parser {
         return humanBeing.getHumanBeing();
     }
 
-    /**
-     * Метод, преобразующий значение из строкового представления в нужный тип данных
-     *
-     * @param string      - значение в строковом представления
-     * @param description - описание значения
-     * @param nullable    - может ли быть null
-     * @param function    - функция из строки в нужный тип данных
-     * @param predicate   - predicate - предикат, проверяющий правильность значения
-     * @param error       - сообщение об ошибке
-     * @param <T>         - тип возвращаемого значения
-     * @return значение
-     */
     public static <T> T valueParser(String string,
                                     String description,
                                     boolean nullable,

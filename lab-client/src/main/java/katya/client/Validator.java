@@ -1,18 +1,18 @@
-package katya.client.state;
+package katya.client;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class ValueSetter<T> {
+public class Validator<T> {
     private String string;
     private T value;
 
-    public ValueSetter(String string) {
+    public Validator(String string) {
         this.string = string;
     }
-    public ValueSetter(Scanner scanner) {
+    public Validator(Scanner scanner) {
         try {
             this.string = scanner.nextLine();
         }catch (NoSuchElementException e) {
@@ -22,7 +22,7 @@ public class ValueSetter<T> {
 
     }
 
-    public ValueSetter<T> withCheckingNull(boolean nullable) {
+    public Validator<T> withCheckingNull(boolean nullable) {
         if ("".equals(string)) {
             if (nullable) {
                 value = null;
@@ -33,7 +33,7 @@ public class ValueSetter<T> {
         return this;
     }
 
-    public ValueSetter<T> withCheckingFunction(Function<String, T> function, String description) {
+    public Validator<T> withCheckingFunction(Function<String, T> function, String description) {
         if (!"".equals(string)) {
             try {
                 value = function.apply(string);
@@ -44,7 +44,7 @@ public class ValueSetter<T> {
         return this;
     }
 
-    public ValueSetter<T> withCheckingPredicate(Predicate<Object> predicate, String error) {
+    public Validator<T> withCheckingPredicate(Predicate<Object> predicate, String error) {
         if (!"".equals(string)) {
             if (!predicate.test(value)) {
                 throw new IllegalArgumentException(error);
@@ -58,5 +58,11 @@ public class ValueSetter<T> {
             value = (T) string;
         }
         return value;
+    }
+
+    public static void validateQuantityOfArgs(String[] args, int amountOfArgs) throws IllegalArgumentException {
+        if (args.length != amountOfArgs) {
+            throw new IllegalArgumentException("Неверное количество аргументов, данная команда требует " + amountOfArgs + " аргументов");
+        }
     }
 }
