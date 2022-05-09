@@ -1,5 +1,7 @@
 package katya.common.entites;
 
+import java.util.Date;
+
 public class HumanBeing{
     public static Double IMPACT_SPEED_MIN = -484.;
     private final String name;
@@ -133,6 +135,42 @@ public class HumanBeing{
             }
             return stringWeaponType.toString();
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public boolean getRealHero() {
+        return realHero;
+    }
+
+    public boolean getHasToothpick() {
+        return hasToothpick;
+    }
+
+    public double getImpactSpeed() {
+        return impactSpeed;
+    }
+
+    public String getSoundtrackName() {
+        return soundtrackName;
+    }
+
+    public int getMinutesOfWaiting() {
+        return minutesOfWaiting;
+    }
+
+    public WeaponType getWeaponType() {
+        return weaponType;
+    }
+
+    public Car getCar() {
+        return car;
     }
 
     @Override

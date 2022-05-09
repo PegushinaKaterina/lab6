@@ -14,10 +14,10 @@ public class GeneratorHumanBeing {
         this.state = state;
     }
 
-    public HumanBeing generateHumanBeing(){
+    public void generateHumanBeing(){
         state.generateHumanBeingFields();
         if (state.isCorrect()){
-            humanBeing = new HumanBeing.HumanBeingBuilder()
+            this.humanBeing = new HumanBeing.HumanBeingBuilder()
                     .withName(state.getName())
                     .withCoordinates(state.getX(),state.getY())
                     .withRealHero(state.getRealHero())
@@ -31,6 +31,9 @@ public class GeneratorHumanBeing {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    public HumanBeing getHumanBeing(){
         return humanBeing;
     }
 }
