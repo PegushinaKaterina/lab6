@@ -22,9 +22,6 @@ public class ValueSetter<T> {
 
     }
 
-    public ValueSetter(Object o) {
-    }
-
     public ValueSetter<T> withCheckingNull(boolean nullable) {
         if ("".equals(string)) {
             if (nullable) {
