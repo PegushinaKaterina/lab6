@@ -2,7 +2,10 @@ package katya.common.entites;
 
 import java.util.Date;
 
-public class HumanBeing{
+public class HumanBeing implements Comparable<HumanBeing> {
+    private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+
     public static Double IMPACT_SPEED_MIN = -484.;
     private final String name;
     private final Coordinates coordinates;
@@ -24,7 +27,6 @@ public class HumanBeing{
         this.minutesOfWaiting = builder.minutesOfWaiting;
         this.weaponType = builder.weaponType;
         this.car = builder.car;
-
     }
 
     public static class HumanBeingBuilder {
@@ -137,6 +139,22 @@ public class HumanBeing{
         }
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Long getId(){
+        return id;
+    }
+
+    public Date getCreationDate(){
+        return creationDate;
+    }
+
     public String getName() {
         return name;
     }
@@ -171,6 +189,15 @@ public class HumanBeing{
 
     public Car getCar() {
         return car;
+    }
+
+    @Override
+    public int compareTo(HumanBeing humanBeing) {
+        if (name.compareTo(humanBeing.getName()) == 0) {
+            return Long.compare(id, humanBeing.getId());
+        } else {
+            return name.compareTo(humanBeing.getName());
+        }
     }
 
     @Override

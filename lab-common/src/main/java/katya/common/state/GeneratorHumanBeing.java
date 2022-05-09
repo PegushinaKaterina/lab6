@@ -1,14 +1,12 @@
-package katya.client.state;
+package katya.common.state;
 
 import katya.common.entites.HumanBeing;
 
+import java.util.Scanner;
+
 public class GeneratorHumanBeing {
     private HumanBeing humanBeing = null;
-    State state;
-
-    public GeneratorHumanBeing(State state){
-        this.state = state;
-    }
+    private State state;
 
     public void changeState(State state){
         this.state = state;
@@ -29,6 +27,7 @@ public class GeneratorHumanBeing {
                     .withCar(state.getCool())
                     .build();
         } else {
+            state.errorHandler();
             throw new IllegalArgumentException();
         }
     }

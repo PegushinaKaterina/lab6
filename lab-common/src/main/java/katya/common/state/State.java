@@ -1,6 +1,9 @@
-package katya.client.state;
+package katya.common.state;
 
 import katya.common.entites.HumanBeing;
+
+import java.util.ArrayDeque;
+import java.util.Scanner;
 
 public abstract class State {
     protected String name;
@@ -13,10 +16,23 @@ public abstract class State {
     protected Integer minutesOfWaiting;
     protected HumanBeing.WeaponType weaponType;
     protected Boolean cool;
+    Scanner scanner;
+    protected ArrayDeque<String> errors = new ArrayDeque<String>();
+    public State(Scanner scanner){
+        this.scanner = scanner;
+    }
 
     protected abstract void generateHumanBeingFields();
 
-    public abstract boolean isCorrect();
+    public boolean isCorrect() {
+        return errors.isEmpty();
+    }
+
+    public void errorHandler() {
+        while (!errors.isEmpty()) {
+            System.out.println(errors.remove());
+        }
+    }
 
     public String getName() {
         return name;

@@ -1,4 +1,4 @@
-package katya.client;
+package katya.common.util;
 
 import java.util.Locale;
 

@@ -1,8 +1,8 @@
 package katya.client;
-
-import katya.client.state.FileGeneratorHumanBeing;
-import katya.client.state.GeneratorHumanBeing;
 import katya.common.entites.HumanBeing;
+import katya.common.Validator;
+import katya.common.state.FileGeneratorHumanBeing;
+import katya.common.state.GeneratorHumanBeing;
 
 public class Parser {
 
@@ -17,16 +17,5 @@ public class Parser {
         GeneratorHumanBeing generatorHumanBeing = new GeneratorHumanBeing(fileGeneratorHumanBeing);
         generatorHumanBeing.generateHumanBeing();
         return generatorHumanBeing.getHumanBeing();
-    }
-
-    public static String humanBeingToStringParser(HumanBeing humanBeing) {
-        String string = "";
-        string += humanBeing.getName() + "," + humanBeing.getCoordinates().getX() +
-                "," + humanBeing.getCoordinates().getY() + "," + humanBeing.getRealHero() +
-                "," + humanBeing.getHasToothpick() + "," + humanBeing.getImpactSpeed() +
-                "," + humanBeing.getSoundtrackName() + "," + humanBeing.getMinutesOfWaiting() +
-                "," + humanBeing.getWeaponType() + "," +
-                (humanBeing.getCar().getCool() == null ? " " : humanBeing.getCar().getCool()) + "\n";
-        return string;
     }
 }

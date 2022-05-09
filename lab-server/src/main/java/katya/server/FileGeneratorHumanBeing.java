@@ -1,33 +1,40 @@
-package katya.client.state;
+package katya.server;
 
-import katya.client.CheckBoolean;
-import katya.client.Validator;
+import katya.common.Validator;
 import katya.common.entites.HumanBeing;
+import katya.common.state.State;
+import katya.common.util.CheckBoolean;
 
-import java.util.ArrayDeque;
+import java.util.Scanner;
 
 public class FileGeneratorHumanBeing extends State {
-    ArrayDeque<String> errors = new ArrayDeque<String>();
     String[] stringHumanBeing;
+    private final int quantityOfArgs = 10;
 
-    public FileGeneratorHumanBeing(String[] stringHumanBeing) {
-        this.stringHumanBeing = stringHumanBeing;
+    public FileGeneratorHumanBeing(Scanner scanner) {
+        super(scanner);
     }
-
 
     @Override
     protected void generateHumanBeingFields() {
-        setName();
-        setCoordinates();
-        setRealHero();
-        setHasToothpick();
-        setImpactSpeed();
-        setSoundtrackName();
-        setMinutesOfWaiting();
-        setWeaponType();
-        setCar();
-        if (!isCorrect()) {
-            errorHandler();
+        try {
+            String string = super.scanner.nextLine();
+            stringHumanBeing = string.split(",");
+            for (int i = 0; i < stringHumanBeing.length; i++) {
+                stringHumanBeing[i] = stringHumanBeing[i].trim();
+            }
+            Validator.validateQuantityOfArgs(stringHumanBeing, quantityOfArgs);
+            setName();
+            setCoordinates();
+            setRealHero();
+            setHasToothpick();
+            setImpactSpeed();
+            setSoundtrackName();
+            setMinutesOfWaiting();
+            setWeaponType();
+            setCar();
+        } catch (IllegalArgumentException e) {
+            super.errors.add(e.getMessage());
         }
     }
 
@@ -48,7 +55,7 @@ public class FileGeneratorHumanBeing extends State {
                     .withCheckingNull(false)
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
     }
 
@@ -61,7 +68,7 @@ public class FileGeneratorHumanBeing extends State {
                             "Значение координаты X должно быть не больше " + HumanBeing.Coordinates.X_MAX)
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
         try {
             super.y = new Validator<Integer>(stringHumanBeing[2])
@@ -69,7 +76,7 @@ public class FileGeneratorHumanBeing extends State {
                     .withCheckingFunction(Integer::parseInt, "значение координаты Y должно быть целым числом")
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
     }
 
@@ -80,7 +87,7 @@ public class FileGeneratorHumanBeing extends State {
                     .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"Это реальный герой\" должно быть Да или Нет")
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
     }
 
@@ -91,7 +98,7 @@ public class FileGeneratorHumanBeing extends State {
                     .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"У человека есть зубочистка\" должно быть Да или Нет")
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
     }
 
@@ -104,7 +111,7 @@ public class FileGeneratorHumanBeing extends State {
                             "Значение скорости удара должно быть больше " + HumanBeing.IMPACT_SPEED_MIN)
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
     }
 
@@ -114,7 +121,7 @@ public class FileGeneratorHumanBeing extends State {
                     .withCheckingNull(false)
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
     }
 
@@ -125,7 +132,7 @@ public class FileGeneratorHumanBeing extends State {
                     .withCheckingFunction(Integer::parseInt, "значение времени ожидания должно быть целым числом")
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
     }
 
@@ -137,7 +144,7 @@ public class FileGeneratorHumanBeing extends State {
                             "тип оружия должен быть из списка: \n" + HumanBeing.WeaponType.show() + "Регистр должен сохраняться")
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
     }
 
@@ -149,7 +156,7 @@ public class FileGeneratorHumanBeing extends State {
                             "значение \"У человека есть крутая машина\" должно быть Да или Нет, или быть пустым")
                     .getValue();
         } catch (IllegalArgumentException e) {
-            errors.add(e.getMessage());
+            super.errors.add(e.getMessage());
         }
     }
 }

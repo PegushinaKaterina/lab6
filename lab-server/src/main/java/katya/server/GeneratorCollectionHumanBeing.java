@@ -1,5 +1,7 @@
-package katya.client;
+package katya.server;
 
+import katya.common.FileWorker;
+import katya.common.Parser;
 import katya.common.entites.HumanBeing;
 
 import java.io.FileNotFoundException;
@@ -11,15 +13,12 @@ public class GeneratorCollectionHumanBeing {
     public GeneratorCollectionHumanBeing(FileWorker fileWorker) throws FileNotFoundException {
         collectionHumanBeing = new CollectionHumanBeing(fileWorker);
         ArrayDeque<String> deque = fileWorker.fileReader();
-        boolean erorr = false;
         HumanBeing humanBeing = null;
         int i = 1;
         while (!deque.isEmpty()) {
             System.out.println("Человек №" + i + ":");
             humanBeing = Parser.stringToHumanBeingParser(deque.remove());
-            if (humanBeing == null) {
-                erorr = true;
-            } else {
+            if (humanBeing != null) {
                 System.out.println("Генерация прошла успешно");
                 collectionHumanBeing.add(humanBeing);
             }

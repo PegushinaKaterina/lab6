@@ -1,4 +1,4 @@
-package katya.client;
+package katya.common;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
