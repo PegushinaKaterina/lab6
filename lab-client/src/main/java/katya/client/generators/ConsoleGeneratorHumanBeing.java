@@ -1,9 +1,10 @@
-package katya.client;
+package katya.client.generators;
 
 import katya.common.Validator;
 import katya.common.entites.HumanBeing;
 import katya.common.state.State;
 import katya.common.util.CheckBoolean;
+
 import java.util.Scanner;
 
 public class ConsoleGeneratorHumanBeing extends State {

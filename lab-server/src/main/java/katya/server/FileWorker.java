@@ -1,13 +1,13 @@
-package katya.common;
+package katya.server;
 
-import katya.common.state.ConsoleGeneratorHumanBeing;
+import katya.common.Parser;
+import katya.server.entites.CollectionManager;
 
 import java.io.*;
-import java.util.ArrayDeque;
-import java.util.Scanner;
 
 public class FileWorker {
     private final File file;
+
 
     public FileWorker(String fileName) throws FileNotFoundException {
         file = new File(fileName);
@@ -22,21 +22,11 @@ public class FileWorker {
             }
         }
     }
-
-    public ArrayDeque<String> fileReader() throws FileNotFoundException{
-        ArrayDeque<String> deque = new ArrayDeque<String>();
-        Scanner scanner = new Scanner(file);
-        try (scanner) {
-            do {
-                String string = scanner.nextLine();
-                deque.add(string);
-            } while (scanner.hasNextLine());
-            return deque;
-        }
-
+    public File getFile(){
+        return file;
     }
 
-    public void fileWriter(CollectionHumanBeing collectionHumanBeing) throws IOException {
+    public void fileWriter(CollectionManager collectionHumanBeing) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
         try (fileOutputStream; outputStreamWriter){
@@ -47,3 +37,4 @@ public class FileWorker {
         }
     }
 }
+

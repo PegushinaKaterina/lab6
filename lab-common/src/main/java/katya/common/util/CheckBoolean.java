@@ -3,7 +3,7 @@ package katya.common.util;
 import java.util.Locale;
 
 public class CheckBoolean {
-    public static Boolean checkBoolean(String bool) {
+    public static boolean checkBoolean(String bool) {
         bool = bool.toLowerCase(Locale.ROOT);
         if (bool.equals("да") || bool.equals("true")) {
             return true;

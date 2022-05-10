@@ -1,4 +1,4 @@
-package katya.client;
+package katya.server.generators;
 
 import katya.common.Validator;
 import katya.common.entites.HumanBeing;
@@ -7,24 +7,23 @@ import katya.common.util.CheckBoolean;
 
 import java.util.Scanner;
 
-public class ScriptGeneratorHumanBeing extends State {
+public class FileGeneratorHumanBeing extends State {
     String[] stringHumanBeing;
+    private static final int QUANTITY_OF_ARGS = 10;
 
-    public ScriptGeneratorHumanBeing(Scanner scanner) {
+    public FileGeneratorHumanBeing(Scanner scanner) {
         super(scanner);
     }
 
     @Override
     protected void generateHumanBeingFields() {
         try {
-            String[] stringHumanBeing = new String[10];
-            for (int i = 0; i < 10; i++){
-                if(super.scanner.hasNextLine()){
-                    stringHumanBeing[i] = super.scanner.nextLine();
-                } else {
-                    throw new IllegalArgumentException("Неверное количество аргументов, данная команда требует 10 аргументов");
-                }
+            String string = super.scanner.nextLine();
+            stringHumanBeing = string.split(",");
+            for (int i = 0; i < stringHumanBeing.length; i++) {
+                stringHumanBeing[i] = stringHumanBeing[i].trim();
             }
+            Validator.validateQuantityOfArgs(stringHumanBeing, QUANTITY_OF_ARGS);
             setName();
             setCoordinates();
             setRealHero();
@@ -161,3 +160,5 @@ public class ScriptGeneratorHumanBeing extends State {
         }
     }
 }
+
+

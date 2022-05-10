@@ -16,7 +16,7 @@ public abstract class State {
     protected Integer minutesOfWaiting;
     protected HumanBeing.WeaponType weaponType;
     protected Boolean cool;
-    Scanner scanner;
+    protected Scanner scanner;
     protected ArrayDeque<String> errors = new ArrayDeque<String>();
     public State(Scanner scanner){
         this.scanner = scanner;

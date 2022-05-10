@@ -28,7 +28,7 @@ public class GeneratorHumanBeing {
                     .build();
         } else {
             state.errorHandler();
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Генерация прошла неуспешно");
         }
     }
 

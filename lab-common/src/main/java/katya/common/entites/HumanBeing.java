@@ -1,8 +1,12 @@
 package katya.common.entites;
 
+import katya.common.state.GeneratorHumanBeing;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class HumanBeing implements Comparable<HumanBeing> {
+public class HumanBeing implements Comparable<HumanBeing>, Serializable {
+    public static GeneratorHumanBeing generatorHumanBeing = new GeneratorHumanBeing();
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
 
@@ -92,7 +96,7 @@ public class HumanBeing implements Comparable<HumanBeing> {
 
     }
 
-    public static class Coordinates {
+    public static class Coordinates implements Serializable{
         public static final int X_MAX = 877;
         private final int x; //Максимальное значение поля: 877
         private final int y;
@@ -111,7 +115,7 @@ public class HumanBeing implements Comparable<HumanBeing> {
         }
     }
 
-    public static class Car {
+    public static class Car implements Serializable{
         private final Boolean cool;
 
         public Car(Boolean cool) {
@@ -124,7 +128,7 @@ public class HumanBeing implements Comparable<HumanBeing> {
 
     }
 
-    public static enum WeaponType {
+    public static enum WeaponType implements Serializable{
         PISTOL,
         SHOTGUN,
         BAT;
