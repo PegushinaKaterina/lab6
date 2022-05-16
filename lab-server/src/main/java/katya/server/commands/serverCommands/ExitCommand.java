@@ -1,16 +1,14 @@
 package katya.server.commands.serverCommands;
 
-import katya.common.util.Parser;
-import katya.server.util.workingWithCommand.CommandManager;
 import katya.server.entites.CollectionManager;
+import katya.server.util.workingWithCommand.CommandManager;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class ExitCommand extends AbstractServerCommand{
+public class ExitCommand extends AbstractServerCommand {
     private final Scanner scanner = new Scanner(System.in);
-    private final Parser parser = new Parser();
     private final CollectionManager collectionManager;
 
     public ExitCommand(CollectionManager collectionManager) {

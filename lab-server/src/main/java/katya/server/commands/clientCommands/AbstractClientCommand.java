@@ -18,6 +18,37 @@ public abstract class AbstractClientCommand {
         this.generatesHumanBeing = builder.generatesHumanBeing;
     }
 
+    public abstract Response executeCommand(Request request);
+
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantityOfArgs() {
+        return quantityOfArgs;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getDescriptionOfArgs() {
+        return descriptionOfArgs;
+    }
+    public boolean getGeneratesHumanBeing() {
+        return generatesHumanBeing;
+    }
+
+    @Override
+    public String toString() {
+        if (quantityOfArgs == 0) {
+            return name + " - " + description;
+        } else {
+            return name + " - " + description
+                    + "\n     Аргументы: " + descriptionOfArgs;
+        }
+    }
+
     public static class AbstractCommandBuilder {
         private String name; // Имя
         private int quantityOfArgs; // Количество аргументов
@@ -48,37 +79,6 @@ public abstract class AbstractClientCommand {
         public AbstractCommandBuilder withGeneratesHumanBeing(boolean generatesHumanBeing) {
             this.generatesHumanBeing = generatesHumanBeing;
             return this;
-        }
-    }
-
-    public abstract Response executeCommand(Request request);
-
-    public String getName() {
-        return name;
-    }
-
-    public int getQuantityOfArgs() {
-        return quantityOfArgs;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDescriptionOfArgs() {
-        return descriptionOfArgs;
-    }
-    public boolean getGeneratesHumanBeing() {
-        return generatesHumanBeing;
-    }
-
-    @Override
-    public String toString() {
-        if (quantityOfArgs == 0) {
-            return name + " - " + description;
-        } else {
-            return name + " - " + description +
-                    "\n     Аргументы: " + descriptionOfArgs;
         }
     }
 }

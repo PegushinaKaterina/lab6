@@ -24,7 +24,7 @@
 
   Most Checks are configurable, be sure to consult the documentation.
 
-  To completely disable a check, just comment it out or delete it from the file.
+  To completely disable a check, just comment it out or delete it from the file.txt.
 
   Finally, it is worth reading the documentation.
 
@@ -32,7 +32,7 @@
 
 <module name="Checker">
     <!--
-        If you set the basedir property below, then all reported file
+        If you set the basedir property below, then all reported file.txt
         names will be relative to the specified directory. See
         http://checkstyle.sourceforge.net/5.x/config.html#Checker
 
@@ -65,7 +65,7 @@
     <!-- Checks for Headers                                -->
     <!-- See http://checkstyle.sf.net/config_header.html   -->
     <!-- <module name="Header"> -->
-    <!--   <property name="headerFile" value="${checkstyle.header.file}"/> -->
+    <!--   <property name="headerFile" value="${checkstyle.header.file.txt}"/> -->
     <!--   <property name="fileExtensions" value="java"/> -->
     <!-- </module> -->
 

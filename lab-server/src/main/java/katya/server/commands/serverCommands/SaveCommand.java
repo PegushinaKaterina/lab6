@@ -6,7 +6,8 @@ import java.io.IOException;
 
 public class SaveCommand extends AbstractServerCommand {
 
-    private final CollectionManager collectionManager ;
+    private final CollectionManager collectionManager;
+
     public SaveCommand(CollectionManager collectionManager) {
         super(new AbstractServerCommand.AbstractCommandBuilder()
                 .withName("save")
@@ -15,7 +16,7 @@ public class SaveCommand extends AbstractServerCommand {
     }
 
     @Override
-    public String executeCommand(){
+    public String executeCommand() {
         try {
             collectionManager.getFileWorker().fileWriter(collectionManager);
             return "Коллекция сохранена в файл";

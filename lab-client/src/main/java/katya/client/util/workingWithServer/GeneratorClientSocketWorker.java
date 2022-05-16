@@ -1,7 +1,7 @@
 package katya.client.util.workingWithServer;
 
-import katya.common.util.Validator;
 import katya.common.util.CheckBoolean;
+import katya.common.util.Validator;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -10,8 +10,9 @@ import java.util.Scanner;
 
 public class GeneratorClientSocketWorker {
     private final int maxPort = 65535;
-    ClientSocketWorker clientSocketWorker;
-    public GeneratorClientSocketWorker(){
+    private ClientSocketWorker clientSocketWorker;
+
+    public GeneratorClientSocketWorker() {
         askForAddress();
         askForPort();
     }
@@ -43,8 +44,7 @@ public class GeneratorClientSocketWorker {
                 isRunning = false;
             } catch (IllegalArgumentException e) {
                 e.getMessage();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 System.out.println(e.getMessage());
                 System.out.println(question);
             }
@@ -59,7 +59,7 @@ public class GeneratorClientSocketWorker {
         }
     }
 
-    private void inputAddress(boolean answer) throws IOException  {
+    private void inputAddress(boolean answer) throws IOException {
         Scanner scanner = new Scanner(System.in);
         try (scanner) {
             if (answer) {
@@ -110,7 +110,7 @@ public class GeneratorClientSocketWorker {
         }
     }
 
-    public ClientSocketWorker getClientSocketWorker(){
+    public ClientSocketWorker getClientSocketWorker() {
         return clientSocketWorker;
     }
 }

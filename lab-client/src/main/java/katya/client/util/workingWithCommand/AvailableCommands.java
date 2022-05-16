@@ -1,6 +1,9 @@
 package katya.client.util.workingWithCommand;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class AvailableCommands {
 

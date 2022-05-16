@@ -53,10 +53,10 @@ public class RequestCreator {
     private Request createRequestWithHumanBeing(CommandToSend command) {
         try {
             Validator.validateQuantityOfArgs(command.getCommandArgs(), 0);
-            HumanBeing.generatorHumanBeing.generateHumanBeing();
+            HumanBeing.getGeneratorHumanBeing().generateHumanBeing();
             return new Request.RequestBuilder().withName(command
                     .getCommandName())
-                    .withHumanBeingArgument(HumanBeing.generatorHumanBeing.getHumanBeing())
+                    .withHumanBeingArgument(HumanBeing.getGeneratorHumanBeing().getHumanBeing())
                     .build();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -68,8 +68,8 @@ public class RequestCreator {
         try {
             Validator.validateQuantityOfArgs(command.getCommandArgs(), 0);
             Long id = new Validator<Long>(command.getCommandArgs()[0]).withCheckingNull(false).withCheckingFunction(Long::parseLong, "значение id должно быть целым числом").withCheckingPredicate(arg -> (Long) arg > 0, "Значение id должно быть больше 0").getValue();
-            HumanBeing.generatorHumanBeing.generateHumanBeing();
-            return new Request.RequestBuilder().withName(command.getCommandName()).withLongArgument(id).withHumanBeingArgument(HumanBeing.generatorHumanBeing.getHumanBeing()).build();
+            HumanBeing.getGeneratorHumanBeing().generateHumanBeing();
+            return new Request.RequestBuilder().withName(command.getCommandName()).withLongArgument(id).withHumanBeingArgument(HumanBeing.getGeneratorHumanBeing().getHumanBeing()).build();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return null;

@@ -5,7 +5,10 @@ import katya.common.util.Response;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 
-public class ReceiveResponse {
+public final class ReceiveResponse {
+    private ReceiveResponse() {
+    }
+
     public static void receiveResponse(ClientSocketWorker clientSocketWorker) {
         try {
             Response response = clientSocketWorker.receiveResponse();

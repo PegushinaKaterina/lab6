@@ -1,5 +1,7 @@
 package katya.client.generators;
 
+import katya.common.entites.Coordinates;
+import katya.common.entites.WeaponType;
 import katya.common.util.Validator;
 import katya.common.entites.HumanBeing;
 import katya.common.state.State;
@@ -17,8 +19,8 @@ public class ConsoleGeneratorHumanBeing extends State {
     protected void generateHumanBeingFields() {
             setValue("Введите имя",
                     this::setName);
-            setValue("Введите координату X" +
-                             "значение должно быть целым числом не больше " + HumanBeing.Coordinates.X_MAX,
+            setValue("Введите координату X"
+                            + "значение должно быть целым числом не больше " + Coordinates.X_MAX,
                     this::setX);
             setValue("Введите координату Y" + "значение должно быть целым числом",
                     this::setY);
@@ -26,18 +28,18 @@ public class ConsoleGeneratorHumanBeing extends State {
                     this::setRealHero);
             setValue("У героя есть зубочистка?" + "значение должно быть Да или Нет",
                     this::setHasToothpick);
-            setValue("Введите скорость удара" +
-                            "значение должно быть вещественным числом и больше " + HumanBeing.IMPACT_SPEED_MIN,
+            setValue("Введите скорость удара"
+                            + "значение должно быть вещественным числом и больше " + HumanBeing.IMPACT_SPEED_MIN,
                     this::setImpactSpeed);
             setValue("Введите название саундтрека",
                     this::setSoundtrackName);
             setValue("Введите время ожидания" + "значение должно быть целым числом",
                     this::setMinutesOfWaiting);
-            setValue("Введите тип оружия" +
-                            "допустимые значения: \n" + HumanBeing.WeaponType.show() + "регистр должен сохраняться",
+            setValue("Введите тип оружия"
+                            + "допустимые значения: \n" + WeaponType.show() + "регистр должен сохраняться",
                     this::setWeaponType);
-            setValue("Машина крутая?" +
-                            "значение должно быть Да или Нет. Если хотите оставить это значение, пустым нажмите enter",
+            setValue("Машина крутая?"
+                            + "значение должно быть Да или Нет. Если хотите оставить это значение, пустым нажмите enter",
                     this::setCar);
     }
 
@@ -64,8 +66,8 @@ public class ConsoleGeneratorHumanBeing extends State {
         super.x = new Validator<Integer>(super.scanner)
                 .withCheckingNull(false)
                 .withCheckingFunction(Integer::parseInt, "значение координаты X должно быть целым числом")
-                .withCheckingPredicate(arg -> (int) arg < HumanBeing.Coordinates.X_MAX,
-                        "Значение координаты X должно быть не больше " + HumanBeing.Coordinates.X_MAX)
+                .withCheckingPredicate(arg -> (int) arg < Coordinates.X_MAX,
+                        "Значение координаты X должно быть не больше " + Coordinates.X_MAX)
                 .getValue();
     }
 
@@ -114,10 +116,10 @@ public class ConsoleGeneratorHumanBeing extends State {
     }
 
     public void setWeaponType() throws IllegalArgumentException {
-        super.weaponType = new Validator<HumanBeing.WeaponType>(super.scanner)
+        super.weaponType = new Validator<WeaponType>(super.scanner)
                 .withCheckingNull(false)
-                .withCheckingFunction(HumanBeing.WeaponType::valueOf,
-                        "тип оружия должен быть из списка: \n" + HumanBeing.WeaponType.show() + "Регистр должен сохраняться")
+                .withCheckingFunction(WeaponType::valueOf,
+                        "тип оружия должен быть из списка: \n" + WeaponType.show() + "Регистр должен сохраняться")
                 .getValue();
 
     }

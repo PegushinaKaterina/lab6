@@ -1,21 +1,24 @@
 package katya.client.util.workingWithCommand;
 
-import katya.client.util.workingWithServer.ClientSocketWorker;
 import katya.client.commands.ExecuteScriptCommand;
 import katya.client.commands.ExitCommand;
+import katya.client.util.workingWithServer.ClientSocketWorker;
 import katya.client.util.workingWithServer.ReceiveResponse;
 import katya.client.util.workingWithServer.SendRequest;
 
 import java.util.Locale;
 import java.util.Scanner;
 
-public class CommandManager {
-    private static final CommandListener commandListener = new CommandListener();
+public final class CommandManager {
+    private static final CommandListener COMMAND_LISTENER = new CommandListener();
     private static boolean statusOfCommandListening = true;
+
+    private CommandManager() {
+    }
 
     public static void performCommandd(Scanner scanner, ClientSocketWorker clientSocketWorker) {
         while (statusOfCommandListening) {
-            CommandToSend command = commandListener.readCommandFromConsole(scanner);
+            CommandToSend command = COMMAND_LISTENER.readCommandFromConsole(scanner);
             performCommand(command, clientSocketWorker);
         }
     }
@@ -36,6 +39,6 @@ public class CommandManager {
     }
 
     public static CommandListener getCommandListener() {
-        return commandListener;
+        return COMMAND_LISTENER;
     }
 }

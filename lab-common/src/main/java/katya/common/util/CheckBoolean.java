@@ -2,12 +2,15 @@ package katya.common.util;
 
 import java.util.Locale;
 
-public class CheckBoolean {
-    public static boolean checkBoolean(String bool) {
-        bool = bool.toLowerCase(Locale.ROOT);
-        if (bool.equals("да") || bool.equals("true")) {
+public final class CheckBoolean {
+    private CheckBoolean() {
+    }
+
+    public static boolean checkBoolean(String string) {
+        String bool = string.toLowerCase(Locale.ROOT);
+        if ("да".equals(bool) || "true".equals(bool)) {
             return true;
-        } else if (bool.equals("нет") || bool.equals("false")) {
+        } else if ("нет".equals(bool) || "false".equals(bool)) {
             return false;
         } else {
             throw new IllegalArgumentException();

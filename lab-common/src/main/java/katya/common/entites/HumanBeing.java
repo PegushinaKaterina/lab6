@@ -6,11 +6,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class HumanBeing implements Comparable<HumanBeing>, Serializable {
-    public static GeneratorHumanBeing generatorHumanBeing = new GeneratorHumanBeing();
+    public static final Double IMPACT_SPEED_MIN = -484.;
+    private static GeneratorHumanBeing generatorHumanBeing = new GeneratorHumanBeing();
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-
-    public static Double IMPACT_SPEED_MIN = -484.;
     private final String name;
     private final Coordinates coordinates;
     private final Boolean realHero;
@@ -20,7 +19,6 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
     private final Integer minutesOfWaiting;
     private final WeaponType weaponType;
     private final Car car;
-
     private HumanBeing(HumanBeingBuilder builder) {
         this.name = builder.name;
         this.coordinates = builder.coordinates;
@@ -31,6 +29,104 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
         this.minutesOfWaiting = builder.minutesOfWaiting;
         this.weaponType = builder.weaponType;
         this.car = builder.car;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public boolean getRealHero() {
+        return realHero;
+    }
+
+    public boolean getHasToothpick() {
+        return hasToothpick;
+    }
+
+    public double getImpactSpeed() {
+        return impactSpeed;
+    }
+
+    public String getSoundtrackName() {
+        return soundtrackName;
+    }
+
+    public int getMinutesOfWaiting() {
+        return minutesOfWaiting;
+    }
+
+    public WeaponType getWeaponType() {
+        return weaponType;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public static GeneratorHumanBeing getGeneratorHumanBeing() {
+        return generatorHumanBeing;
+    }
+
+    @Override
+    public int compareTo(HumanBeing humanBeing) {
+        return name.compareTo(humanBeing.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Человек с именем " + name + "\n"
+                + "   Скорость удара: " + impactSpeed
+                + ", время ожидания: " + minutesOfWaiting;
+        /*
+          String stringRealHero;
+        if (realHero == true) {
+            stringRealHero = "Это реальный человек";
+        } else {
+            stringRealHero = "Это не реальный человек";
+        }
+        String stringHasToothpick;
+        if (hasToothpick == true) {
+            stringHasToothpick = "у него есть зубочистка";
+        } else {
+            stringHasToothpick = "у него нет зубочистки";
+        }
+        String stringCar;
+        if (car.getCool() == null) {
+            stringCar = ", о его машине ничего не известно";
+        } else if (car.getCool() == false) {
+            stringCar = " и нет крутой машины";
+        } else {
+            stringCar = " и есть крутая машина";
+        }
+        return "Человек с именем " + name + ", id - " + id + "\n" +
+                "   Дата создания: " + creationDate + ", " +
+                "Координаты: " + "x - " + coordinates.getX() + ", y - " +coordinates.getY() + "\n" +
+                "   " + stringRealHero + ", " +stringHasToothpick + stringCar + ".\n"+
+                "   Скорость удара: " + impactSpeed +
+                ", cаундтрек: " + soundtrackName +
+                ", время ожидания: " + minutesOfWaiting +
+                ", Тип оружия:" + weaponType + "\n";
+                */
     }
 
     public static class HumanBeingBuilder {
@@ -89,152 +185,10 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
             return this;
         }
 
-        public HumanBeing build(){
+        public HumanBeing build() {
             return new HumanBeing(this);
         }
-
-
-    }
-
-    public static class Coordinates implements Serializable{
-        public static final int X_MAX = 877;
-        private final int x; //Максимальное значение поля: 877
-        private final int y;
-
-        public Coordinates(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-    }
-
-    public static class Car implements Serializable{
-        private final Boolean cool;
-
-        public Car(Boolean cool) {
-            this.cool = cool;
-        }
-
-        public Boolean getCool() {
-            return cool;
-        }
-
-    }
-
-    public static enum WeaponType implements Serializable{
-        PISTOL,
-        SHOTGUN,
-        BAT;
-
-        public static String show() {
-            StringBuilder stringWeaponType = new StringBuilder();
-            for (WeaponType i : values()) {
-                stringWeaponType.append(i);
-                stringWeaponType.append("\n");
-            }
-            return stringWeaponType.toString();
-        }
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Long getId(){
-        return id;
-    }
-
-    public Date getCreationDate(){
-        return creationDate;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public boolean getRealHero() {
-        return realHero;
-    }
-
-    public boolean getHasToothpick() {
-        return hasToothpick;
-    }
-
-    public double getImpactSpeed() {
-        return impactSpeed;
-    }
-
-    public String getSoundtrackName() {
-        return soundtrackName;
-    }
-
-    public int getMinutesOfWaiting() {
-        return minutesOfWaiting;
-    }
-
-    public WeaponType getWeaponType() {
-        return weaponType;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    @Override
-    public int compareTo(HumanBeing humanBeing) {
-            return name.compareTo(humanBeing.getName());
-    }
-
-    @Override
-    public String toString() {
-        return "Человек с именем " + name + "\n" +
-                "   Скорость удара: " + impactSpeed +
-                ", время ожидания: " + minutesOfWaiting;
-        /*
-          String stringRealHero;
-        if (realHero == true) {
-            stringRealHero = "Это реальный человек";
-        } else {
-            stringRealHero = "Это не реальный человек";
-        }
-        String stringHasToothpick;
-        if (hasToothpick == true) {
-            stringHasToothpick = "у него есть зубочистка";
-        } else {
-            stringHasToothpick = "у него нет зубочистки";
-        }
-        String stringCar;
-        if (car.getCool() == null) {
-            stringCar = ", о его машине ничего не известно";
-        } else if (car.getCool() == false) {
-            stringCar = " и нет крутой машины";
-        } else {
-            stringCar = " и есть крутая машина";
-        }
-        return "Человек с именем " + name + ", id - " + id + "\n" +
-                "   Дата создания: " + creationDate + ", " +
-                "Координаты: " + "x - " + coordinates.getX() + ", y - " +coordinates.getY() + "\n" +
-                "   " + stringRealHero + ", " +stringHasToothpick + stringCar + ".\n"+
-                "   Скорость удара: " + impactSpeed +
-                ", cаундтрек: " + soundtrackName +
-                ", время ожидания: " + minutesOfWaiting +
-                ", Тип оружия:" + weaponType + "\n";
-                */
     }
 
 }
+

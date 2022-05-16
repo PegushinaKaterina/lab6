@@ -1,5 +1,4 @@
 package katya.server.entites;
-
 import katya.common.entites.HumanBeing;
 import katya.server.util.workingWithCommand.FileWorker;
 
@@ -9,10 +8,10 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class CollectionManager {
-    public static long idCounter = 1;
-    public Date creationDate;
-    LinkedList<HumanBeing> collectionHumanBeing = new LinkedList<HumanBeing>();
-    FileWorker fileWorker;
+    private static long idCounter = 1;
+    private Date creationDate;
+    private LinkedList<HumanBeing> collectionHumanBeing = new LinkedList<HumanBeing>();
+    private FileWorker fileWorker;
 
     public CollectionManager(FileWorker fileWorker) throws FileNotFoundException {
         creationDate = new Date();
@@ -28,23 +27,23 @@ public class CollectionManager {
     }
 
     public String info() {
-        return "Информация о коллекции:" +
-                "\nКласс коллекции: " + collectionHumanBeing.getClass().toString() +
-                "\nДата создания: " + creationDate +
-                "\nРазмер коллекции: " + collectionHumanBeing.size() +
-                "\nКласс экземпляров коллекции" + HumanBeing.class;
+        return "Информация о коллекции:"
+                + "\nКласс коллекции: " + collectionHumanBeing.getClass().toString()
+                + "\nДата создания: " + creationDate
+                + "\nРазмер коллекции: " + collectionHumanBeing.size()
+                + "\nКласс экземпляров коллекции" + HumanBeing.class;
     }
 
     public String show() {
-        String string = "";
+        StringBuilder string = new StringBuilder();
         if (collectionHumanBeing.isEmpty()) {
             throw new IllegalArgumentException("Коллекция пуста");
         } else {
             for (int i = 0; i < collectionHumanBeing.size(); i++) {
-                string += collectionHumanBeing.get(i).toString() + "\n";
+                string.append(collectionHumanBeing.get(i).toString()).append("\n");
             }
         }
-        return string;
+        return string.toString();
     }
 
     public String add(HumanBeing humanBeing) {
@@ -74,7 +73,7 @@ public class CollectionManager {
                     .stream()
                     .sorted()
                     .collect(Collectors.toCollection(LinkedList::new));
-            if (found == false) {
+            if (!found) {
                 throw new IllegalArgumentException("Элементов со значением id = " + id + " не найдено");
             } else {
                 return "Значение элемента коллекции, id которого равен " + id + " успешно обновлено";
@@ -134,7 +133,7 @@ public class CollectionManager {
                     break;
                 }
             }
-            if (found == false) {
+            if (!found) {
                 throw new IllegalArgumentException("Элементов, меньших, чем заданный, не найдено");
             } else {
                 return "Элементы, меньшие, чем заданный, успешно удалены";
@@ -153,7 +152,7 @@ public class CollectionManager {
                     found = true;
                 }
             }
-            if (found == false) {
+            if (!found) {
                 throw new IllegalArgumentException("Элементов со значением ВРЕМЯ ОЖИДАНИЯ = " + minutesOfWaiting + " не найдено");
             } else {
                 return "Элементы со значением ВРЕМЯ ОЖИДАНИЯ = " + minutesOfWaiting + " успешно удалены";
@@ -166,8 +165,8 @@ public class CollectionManager {
             throw new IllegalArgumentException("Коллекция пуста");
         } else {
             int sumOfMinutesOfWaiting = 0;
-            for (int i = 0; i < collectionHumanBeing.size(); i++) {
-                sumOfMinutesOfWaiting += collectionHumanBeing.get(i).getMinutesOfWaiting();
+            for (HumanBeing humanBeing : collectionHumanBeing) {
+                sumOfMinutesOfWaiting += humanBeing.getMinutesOfWaiting();
             }
             return "Сумма значений поля ВРЕМЯ ОЖИДАНИЯ для всех элементов коллекции = " + sumOfMinutesOfWaiting;
         }
@@ -178,8 +177,8 @@ public class CollectionManager {
             throw new IllegalArgumentException("Коллекция пуста");
         } else {
             int countByImpactSpeed = 0;
-            for (int i = 0; i < collectionHumanBeing.size(); i++) {
-                if (collectionHumanBeing.get(i).getImpactSpeed() == impactSpeed) {
+            for (HumanBeing humanBeing : collectionHumanBeing) {
+                if (humanBeing.getImpactSpeed() == impactSpeed) {
                     countByImpactSpeed++;
                 }
             }

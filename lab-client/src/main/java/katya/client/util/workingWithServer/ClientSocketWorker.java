@@ -1,17 +1,20 @@
 package katya.client.util.workingWithServer;
 
 import katya.common.util.DeSerializer;
+import katya.common.util.Request;
 import katya.common.util.Response;
 import katya.common.util.Serializer;
-import katya.common.util.Request;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
 public class ClientSocketWorker {
-    private final int DEFAULT_PORT = 324;
+    private static final int DEFAULT_PORT = 324;
     private final DatagramChannel datagramChannel;
     private SocketAddress socketAddress;
     private InetAddress host;
@@ -28,21 +31,23 @@ public class ClientSocketWorker {
         datagramChannel.bind(socketAddress);
         datagramChannel.configureBlocking(false);
     }
+
     public void stopClient() throws IOException {
         datagramChannel.close();
     }
 
     public void sendRequest(Request request) throws IOException {
         ByteBuffer bufferToSend = Serializer.serializeRequest(request);
-        datagramChannel.send(bufferToSend,socketAddress);
+        datagramChannel.send(bufferToSend, socketAddress);
     }
 
     public Response receiveResponse() throws ClassNotFoundException, IOException {
         int receivedSize = datagramChannel.socket().getReceiveBufferSize();
         ByteBuffer bufferToReceive = ByteBuffer.allocate(receivedSize);
         SocketAddress socketAddress = datagramChannel.receive(bufferToReceive);
-        if (socketAddress == null)
+        if (socketAddress == null) {
             return null;
+        }
         return DeSerializer.deSerializeResponse(bufferToReceive);
     }
 

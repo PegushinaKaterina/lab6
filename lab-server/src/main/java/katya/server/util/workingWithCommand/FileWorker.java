@@ -13,22 +13,22 @@ public class FileWorker {
         if (!file.exists()) {
             throw new FileNotFoundException("Файл не найден");
         } else {
-            if(!file.canRead()){
+            if (!file.canRead()) {
                 throw new FileNotFoundException("Нет доступа на чтение");
-            }
-            else if (!file.canWrite()){
+            } else if (!file.canWrite()) {
                 throw new FileNotFoundException("Нет доступа на запись");
             }
         }
     }
-    public File getFile(){
+
+    public File getFile() {
         return file;
     }
 
     public void fileWriter(CollectionManager collectionManager) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
-        try (fileOutputStream; outputStreamWriter){
+        try (fileOutputStream; outputStreamWriter) {
             for (int i = 0; i < collectionManager.getCollectionHumanBeing().size(); i++) {
                 String string = Parser.humanBeingToStringParser(collectionManager.getCollectionHumanBeing().get(i));
                 outputStreamWriter.write(string);

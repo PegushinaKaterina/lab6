@@ -5,7 +5,10 @@ import katya.client.util.workingWithCommand.CommandToSend;
 import java.io.IOException;
 import java.time.LocalTime;
 
-public class SendRequest {
+public final class SendRequest {
+    private SendRequest() {
+    }
+
     public static boolean sendRequest(CommandToSend command, ClientSocketWorker clientSocketWorker) {
         RequestCreator requestCreator = new RequestCreator();
         try {

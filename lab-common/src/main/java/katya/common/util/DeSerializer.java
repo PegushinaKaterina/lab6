@@ -1,9 +1,11 @@
 package katya.common.util;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.nio.ByteBuffer;
 
-public class DeSerializer {
+public final class DeSerializer {
 
     private DeSerializer() {
     }

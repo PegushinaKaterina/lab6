@@ -12,10 +12,11 @@ public class Validator<T> {
     public Validator(String string) {
         this.string = string;
     }
+
     public Validator(Scanner scanner) {
         try {
             this.string = scanner.nextLine();
-        }catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             System.out.println("Введен недопустимый символ");
             System.exit(1);
         }

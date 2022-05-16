@@ -2,7 +2,7 @@ package katya.server.util.workingWithCommand;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class CommandListener {
+public class ServerCommandListener {
 
 
     public String readCommand() {

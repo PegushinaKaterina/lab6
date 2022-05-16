@@ -4,7 +4,7 @@ import katya.common.entites.HumanBeing;
 
 import java.util.LinkedList;
 
-public class Response {
+public final class Response {
 
     private final String messageToResponse;
     private final HumanBeing humanBeingToResponse;
@@ -14,32 +14,6 @@ public class Response {
         this.messageToResponse = responseBuilder.messageToResponse;
         this.humanBeingToResponse = responseBuilder.humanBeingToResponse;
         this.collectionToResponse = responseBuilder.collectionToResponse;
-    }
-
-    public static class ResponseBuilder {
-        private String messageToResponse;
-        private HumanBeing humanBeingToResponse;
-        private LinkedList<HumanBeing> collectionToResponse;
-
-        public ResponseBuilder withMessageToResponse(String messageToResponse) {
-            this.messageToResponse = messageToResponse;
-            return this;
-        }
-
-        public ResponseBuilder withHumanBeingToResponse(HumanBeing humanBeingToResponse) {
-            this.humanBeingToResponse = humanBeingToResponse;
-            return this;
-        }
-
-        public ResponseBuilder withCollectionToResponse(LinkedList<HumanBeing> collectionToResponse) {
-            this.collectionToResponse = collectionToResponse;
-            return this;
-        }
-
-        public Response build() {
-            return new Response(this);
-        }
-
     }
 
     public String getMessageToResponse() {
@@ -73,5 +47,31 @@ public class Response {
                 + (humanBeingToResponse == null ? "" : "\n" + humanBeingToResponse)
                 + ((collectionToResponse == null) ? "" : "\n"
                 + collection);
+    }
+
+    public static class ResponseBuilder {
+        private String messageToResponse;
+        private HumanBeing humanBeingToResponse;
+        private LinkedList<HumanBeing> collectionToResponse;
+
+        public ResponseBuilder withMessageToResponse(String messageToResponse) {
+            this.messageToResponse = messageToResponse;
+            return this;
+        }
+
+        public ResponseBuilder withHumanBeingToResponse(HumanBeing humanBeingToResponse) {
+            this.humanBeingToResponse = humanBeingToResponse;
+            return this;
+        }
+
+        public ResponseBuilder withCollectionToResponse(LinkedList<HumanBeing> collectionToResponse) {
+            this.collectionToResponse = collectionToResponse;
+            return this;
+        }
+
+        public Response build() {
+            return new Response(this);
+        }
+
     }
 }

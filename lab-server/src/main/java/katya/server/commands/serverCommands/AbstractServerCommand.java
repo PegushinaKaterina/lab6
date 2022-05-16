@@ -9,21 +9,6 @@ public abstract class AbstractServerCommand {
         this.description = builder.description;
     }
 
-    public static class AbstractCommandBuilder {
-        private String name; // Имя
-        private String description; // Описание
-
-        public AbstractCommandBuilder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public AbstractCommandBuilder withDescription(String description) {
-            this.description = description;
-            return this;
-        }
-    }
-
     public abstract String executeCommand();
 
     public String getName() {
@@ -38,6 +23,21 @@ public abstract class AbstractServerCommand {
     @Override
     public String toString() {
             return name + " - " + description;
+    }
+
+    public static class AbstractCommandBuilder {
+        private String name; // Имя
+        private String description; // Описание
+
+        public AbstractCommandBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public AbstractCommandBuilder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
     }
 }
 

@@ -4,10 +4,14 @@ import katya.common.entites.HumanBeing;
 
 import java.util.Scanner;
 
-public class Parser {
+public final class Parser {
+    private static final int QUANTITY_OF_ARGS = 10;
+    private Parser() {
+    }
+
     public static String[] stringToHumanBeingStringParserFromScript(Scanner scanner) {
-        String[] stringHumanBeing = new String[10];
-        for (int i = 0; i < 10; i++) {
+        String[] stringHumanBeing = new String[QUANTITY_OF_ARGS];
+        for (int i = 0; i < QUANTITY_OF_ARGS; i++) {
             if (scanner.hasNextLine()) {
                 stringHumanBeing[i] = scanner.nextLine();
             } else {
@@ -17,7 +21,7 @@ public class Parser {
         return stringHumanBeing;
     }
 
-    public static String[] stringToHumanBeingStringParserFromFile(Scanner scanner){
+    public static String[] stringToHumanBeingStringParserFromFile(Scanner scanner) {
         String string = scanner.nextLine();
         String[] stringHumanBeing = string.split(",");
         for (int i = 0; i < stringHumanBeing.length; i++) {
@@ -28,12 +32,12 @@ public class Parser {
 
     public static String humanBeingToStringParser(HumanBeing humanBeing) {
         String string = "";
-        string += humanBeing.getName() + "," + humanBeing.getCoordinates().getX() +
-                "," + humanBeing.getCoordinates().getY() + "," + humanBeing.getRealHero() +
-                "," + humanBeing.getHasToothpick() + "," + humanBeing.getImpactSpeed() +
-                "," + humanBeing.getSoundtrackName() + "," + humanBeing.getMinutesOfWaiting() +
-                "," + humanBeing.getWeaponType() + "," +
-                (humanBeing.getCar().getCool() == null ? " " : humanBeing.getCar().getCool()) + "\n";
+        string += humanBeing.getName() + "," + humanBeing.getCoordinates().getX() + ","
+                + humanBeing.getCoordinates().getY() + "," + humanBeing.getRealHero() + ","
+                + humanBeing.getHasToothpick() + "," + humanBeing.getImpactSpeed() + ","
+                + humanBeing.getSoundtrackName() + "," + humanBeing.getMinutesOfWaiting() + ","
+                + humanBeing.getWeaponType() + ","
+                + (humanBeing.getCar().getCool() == null ? " " : humanBeing.getCar().getCool()) + "\n";
         return string;
     }
 }

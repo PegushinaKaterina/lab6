@@ -4,9 +4,11 @@ package katya.client.commands;
 import katya.client.util.workingWithCommand.CommandManager;
 import katya.common.util.Validator;
 
-public class ExitCommand  {
+public final class ExitCommand {
+    private ExitCommand() {
+    }
 
-    public static void executeCommand(String[] commandArgs){
+    public static void executeCommand(String[] commandArgs) {
         try {
             Validator.validateQuantityOfArgs(commandArgs, 0);
             System.out.println("Принудительное завершение программы");

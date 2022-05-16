@@ -1,15 +1,17 @@
 package katya.client.generators;
 
-import katya.common.util.Parser;
-import katya.common.util.Validator;
+import katya.common.entites.Coordinates;
 import katya.common.entites.HumanBeing;
+import katya.common.entites.WeaponType;
 import katya.common.state.State;
 import katya.common.util.CheckBoolean;
+import katya.common.util.Parser;
+import katya.common.util.Validator;
 
 import java.util.Scanner;
 
 public class ScriptGeneratorHumanBeing extends State {
-    String[] stringHumanBeing;
+    private String[] stringHumanBeing;
 
     public ScriptGeneratorHumanBeing(Scanner scanner) {
         super(scanner);
@@ -59,8 +61,8 @@ public class ScriptGeneratorHumanBeing extends State {
             super.x = new Validator<Integer>(stringHumanBeing[1])
                     .withCheckingNull(false)
                     .withCheckingFunction(Integer::parseInt, "значение координаты X должно быть целым числом")
-                    .withCheckingPredicate(arg -> (int) arg < HumanBeing.Coordinates.X_MAX,
-                            "Значение координаты X должно быть не больше " + HumanBeing.Coordinates.X_MAX)
+                    .withCheckingPredicate(arg -> (int) arg < Coordinates.X_MAX,
+                            "Значение координаты X должно быть не больше " + Coordinates.X_MAX)
                     .getValue();
         } catch (IllegalArgumentException e) {
             super.errors.add(e.getMessage());
@@ -133,10 +135,10 @@ public class ScriptGeneratorHumanBeing extends State {
 
     public void setWeaponType() {
         try {
-            super.weaponType = new Validator<HumanBeing.WeaponType>(stringHumanBeing[8])
+            super.weaponType = new Validator<WeaponType>(stringHumanBeing[8])
                     .withCheckingNull(false)
-                    .withCheckingFunction(HumanBeing.WeaponType::valueOf,
-                            "тип оружия должен быть из списка: \n" + HumanBeing.WeaponType.show() + "Регистр должен сохраняться")
+                    .withCheckingFunction(WeaponType::valueOf,
+                            "тип оружия должен быть из списка: \n" + WeaponType.show() + "Регистр должен сохраняться")
                     .getValue();
         } catch (IllegalArgumentException e) {
             super.errors.add(e.getMessage());

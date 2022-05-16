@@ -1,6 +1,6 @@
 package katya.common.state;
 
-import katya.common.entites.HumanBeing;
+import katya.common.entites.WeaponType;
 
 import java.util.ArrayDeque;
 import java.util.Scanner;
@@ -14,11 +14,12 @@ public abstract class State {
     protected Double impactSpeed;
     protected String soundtrackName;
     protected Integer minutesOfWaiting;
-    protected HumanBeing.WeaponType weaponType;
+    protected WeaponType weaponType;
     protected Boolean cool;
     protected Scanner scanner;
     protected ArrayDeque<String> errors = new ArrayDeque<String>();
-    public State(Scanner scanner){
+
+    public State(Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -66,7 +67,7 @@ public abstract class State {
         return minutesOfWaiting;
     }
 
-    public HumanBeing.WeaponType getWeaponType() {
+    public WeaponType getWeaponType() {
         return weaponType;
     }
 
