@@ -1,13 +1,13 @@
 package katya.client.commands;
 
 
-import katya.client.ClientSocketWorker;
+import katya.client.util.workingWithServer.ClientSocketWorker;
 import katya.client.generators.ConsoleGeneratorHumanBeing;
 import katya.client.generators.ScriptGeneratorHumanBeing;
-import katya.client.util.CommandListener;
-import katya.client.util.CommandManager;
-import katya.client.util.CommandToSend;
-import katya.common.Validator;
+import katya.client.util.workingWithCommand.CommandListener;
+import katya.client.util.workingWithCommand.CommandManager;
+import katya.client.util.workingWithCommand.CommandToSend;
+import katya.common.util.Validator;
 import katya.common.entites.HumanBeing;
 
 import java.io.File;
@@ -22,10 +22,10 @@ import java.util.Scanner;
 public class ExecuteScriptCommand {
     private static CommandListener commandListener;
 
-    public static void executeCommand(String[] args, ClientSocketWorker clientSocketWorker) {
+    public static void executeCommand(String[] commandArgs, ClientSocketWorker clientSocketWorker) {
         try {
-            Validator.validateQuantityOfArgs(args, 1);
-            String fileName = args[0];
+            Validator.validateQuantityOfArgs(commandArgs, 1);
+            String fileName = commandArgs[0];
             File file = checkScript(fileName);
             hashSet.add(fileName);
             Scanner scanner = new Scanner(file);
@@ -36,7 +36,7 @@ public class ExecuteScriptCommand {
                     CommandToSend command = commandListener.readCommandFromScript(scanner);
                     CommandManager.performCommand(command,clientSocketWorker);
                 } while (scanner.hasNextLine());
-                hashSet.remove(args[0]);
+                hashSet.remove(commandArgs[0]);
             }
         } catch (IllegalArgumentException | IOException e) {
             System.out.println(e.getMessage());

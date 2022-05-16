@@ -1,7 +1,7 @@
 package katya.server.entites;
 
 import katya.common.entites.HumanBeing;
-import katya.server.FileWorker;
+import katya.server.util.workingWithCommand.FileWorker;
 
 import java.io.FileNotFoundException;
 import java.util.Date;

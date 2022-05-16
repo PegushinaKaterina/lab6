@@ -1,14 +1,12 @@
-package katya.client.commands;
+package katya.client.util.workingWithServer;
 
-import katya.client.ClientSocketWorker;
-import katya.client.util.CommandToSend;
-import katya.client.util.RequestCreator;
+import katya.client.util.workingWithCommand.CommandToSend;
 
 import java.io.IOException;
 import java.time.LocalTime;
 
-public class SendRequestCommand {
-    public static boolean executeCommand(CommandToSend command, ClientSocketWorker clientSocketWorker) {
+public class SendRequest {
+    public static boolean sendRequest(CommandToSend command, ClientSocketWorker clientSocketWorker) {
         RequestCreator requestCreator = new RequestCreator();
         try {
             katya.common.util.Request request = requestCreator.createRequestOfCommand(command);

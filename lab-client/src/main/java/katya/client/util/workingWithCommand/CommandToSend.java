@@ -1,4 +1,4 @@
-package katya.client.util;
+package katya.client.util.workingWithCommand;
 
 public class CommandToSend {
 

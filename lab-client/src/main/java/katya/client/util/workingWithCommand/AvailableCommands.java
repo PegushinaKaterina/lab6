@@ -1,14 +1,6 @@
-package katya.client.util;
+package katya.client.util.workingWithCommand;
 
-import katya.client.commands.ExecuteScriptCommand;
-import katya.client.commands.ExitCommand;
-import katya.common.Validator;
-import katya.common.entites.HumanBeing;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.function.Function;
 
 public final class AvailableCommands {
 

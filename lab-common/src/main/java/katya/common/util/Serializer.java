@@ -1,6 +1,7 @@
-package katya.common;
+package katya.common.util;
 
 import katya.common.util.Request;
+import katya.common.util.Response;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

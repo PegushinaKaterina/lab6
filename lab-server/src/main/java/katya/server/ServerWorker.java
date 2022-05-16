@@ -1,14 +1,18 @@
 package katya.server;
 
 import katya.server.commands.clientCommands.*;
-import katya.server.commands.serverCommands.SaveCommand;
 import katya.server.entites.CollectionManager;
+import katya.server.util.ConsoleThread;
+import katya.server.util.RequestThread;
+import katya.server.util.workingWithClient.GeneratorServerSocketWorker;
+import katya.server.util.workingWithClient.ServerSocketWorker;
+import katya.server.util.workingWithCommand.CommandListener;
+import katya.server.util.workingWithCommand.CommandManager;
+import katya.server.util.workingWithCommand.FileWorker;
 
 import java.io.IOException;
 
 public class ServerWorker {
-    private final int maxPort = 65535;
-    private ServerSocketWorker serverSocketWorker;
     private final String fileName;
     private final CommandListener serverCommandListener = new CommandListener();
     private CollectionManager collectionManager;
@@ -37,47 +41,14 @@ public class ServerWorker {
                     new RemoveAllByMinutesOfWaitingCommand(collectionManager),
                     new SumOfMinutesOfWaitingCommand(collectionManager),
                     new CountByImpactSpeedCommand(collectionManager));
-            inputPort();
+            GeneratorServerSocketWorker generatorServerSocketWorker = new GeneratorServerSocketWorker();
+            ServerSocketWorker serverSocketWorker = generatorServerSocketWorker.getServerSocketWorker();
             RequestThread requestThread = new RequestThread(serverSocketWorker, commandManager);
             ConsoleThread consoleThread = new ConsoleThread(serverCommandListener, commandManager);
             requestThread.start();
             consoleThread.start();
         } catch (IOException e) {
             System.out.println(e.getMessage());
-        } catch (ConversionException e) {
-            System.out.println(("Error during type conversion"));
-            System.exit(1);
-        }
-    }
-
-    private void inputPort() throws IOException {
-        ServerConfig.getConsoleTextPrinter().printlnText(TextColoring.getGreenText("Do you want to use a default port? [y/n]"));
-        try {
-            String s = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
-            if ("n".equals(s)) {
-                ServerConfig.getConsoleTextPrinter().printlnText(TextColoring.getGreenText("Please enter the remote host port (1-65535)"));
-                String port = scanner.nextLine();
-                try {
-                    int portInt = Integer.parseInt(port);
-                    if (portInt > 0 && portInt <= maxPort) {
-                        serverSocketWorker = new ServerSocketWorker(portInt);
-                    } else {
-                        ServerConfig.getConsoleTextPrinter().printlnText(TextColoring.getRedText("The number did not fall within the limits, repeat the input"));
-                        inputPort();
-                    }
-                } catch (IllegalArgumentException e) {
-                    ServerConfig.getConsoleTextPrinter().printlnText(TextColoring.getRedText("Error processing the number, repeat the input"));
-                    inputPort();
-                }
-            } else if ("y".equals(s)) {
-                serverSocketWorker = new ServerSocketWorker();
-            } else {
-                ServerConfig.getConsoleTextPrinter().printlnText(TextColoring.getRedText("You entered not valid symbol, try again"));
-                inputPort();
-            }
-        } catch (NoSuchElementException e) {
-            ServerConfig.getConsoleTextPrinter().printlnText(TextColoring.getRedText("An invalid character has been entered, forced shutdown!"));
-            System.exit(1);
         }
     }
 }

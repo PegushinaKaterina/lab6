@@ -1,6 +1,8 @@
-package katya.client.util;
+package katya.client.util.workingWithServer;
 
-import katya.common.Validator;
+import katya.client.util.workingWithCommand.AvailableCommands;
+import katya.client.util.workingWithCommand.CommandToSend;
+import katya.common.util.Validator;
 import katya.common.entites.HumanBeing;
 import katya.common.util.Request;
 

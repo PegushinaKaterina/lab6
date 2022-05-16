@@ -1,14 +1,14 @@
-package katya.client.commands;
+package katya.client.util.workingWithServer;
 
-import katya.client.ClientSocketWorker;
+import katya.common.util.Response;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 
-public class ReceiveResponseCommand {
-    public static void executeCommand(ClientSocketWorker clientSocketWorker) {
+public class ReceiveResponse {
+    public static void receiveResponse(ClientSocketWorker clientSocketWorker) {
         try {
-            katya.common.Response response = clientSocketWorker.receiveResponse();
+            Response response = clientSocketWorker.receiveResponse();
             System.out.println(response.toString());
         } catch (SocketTimeoutException e) {
             System.out.println(("The waiting time for a response from the server has been exceeded, try again later"));

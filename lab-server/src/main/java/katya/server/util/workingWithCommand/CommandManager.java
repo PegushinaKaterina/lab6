@@ -1,14 +1,13 @@
-package katya.server;
+package katya.server.util.workingWithCommand;
 
-import katya.common.Response;
+import katya.common.util.Response;
 import katya.common.util.Request;
 import katya.server.commands.clientCommands.AbstractClientCommand;
 import katya.server.commands.serverCommands.AbstractServerCommand;
+import katya.server.util.workingWithCommand.CommandHistory;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Locale;
 
 public class CommandManager {
     public static final HashMap<String, AbstractClientCommand> CLIENT_AVAILABLE_COMMANDS = new HashMap<>();
@@ -59,6 +58,10 @@ public class CommandManager {
             return ("Такой команды не существует, для того, чтобы увидеть список команд введите HELP");
         }
     }
+    public static void changeStatus() {
+        statusOfCommandListening = !statusOfCommandListening;
+    }
+
     public boolean getStatusOfCommandListening() {
         return statusOfCommandListening;
     }

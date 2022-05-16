@@ -1,8 +1,8 @@
 package katya.client.commands;
 
 
-import katya.client.util.CommandManager;
-import katya.common.Validator;
+import katya.client.util.workingWithCommand.CommandManager;
+import katya.common.util.Validator;
 
 public class ExitCommand  {
 

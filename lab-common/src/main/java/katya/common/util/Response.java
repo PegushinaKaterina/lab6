@@ -1,10 +1,8 @@
-package katya.common;
+package katya.common.util;
 
 import katya.common.entites.HumanBeing;
-import katya.common.util.Request;
 
 import java.util.LinkedList;
-import java.util.Set;
 
 public class Response {
 

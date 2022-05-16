@@ -1,10 +1,10 @@
-package katya.client.util;
+package katya.client.util.workingWithCommand;
 
-import katya.client.ClientSocketWorker;
+import katya.client.util.workingWithServer.ClientSocketWorker;
 import katya.client.commands.ExecuteScriptCommand;
 import katya.client.commands.ExitCommand;
-import katya.client.commands.ReceiveResponseCommand;
-import katya.client.commands.SendRequestCommand;
+import katya.client.util.workingWithServer.ReceiveResponse;
+import katya.client.util.workingWithServer.SendRequest;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -26,8 +26,8 @@ public class CommandManager {
             ExitCommand.executeCommand(command.getCommandArgs());
         } else if ("execute_script".equals(command.getCommandName())) {
             ExecuteScriptCommand.executeCommand(command.getCommandArgs(), clientSocketWorker);
-        } else if (SendRequestCommand.executeCommand(command, clientSocketWorker)) {
-            ReceiveResponseCommand.executeCommand(clientSocketWorker);
+        } else if (SendRequest.sendRequest(command, clientSocketWorker)) {
+            ReceiveResponse.receiveResponse(clientSocketWorker);
         }
     }
 

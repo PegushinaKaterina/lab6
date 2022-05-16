@@ -1,7 +1,6 @@
 package katya.server.commands.clientCommands;
 
-import katya.common.Response;
-import katya.common.Validator;
+import katya.common.util.Response;
 import katya.common.util.Request;
 
 import java.util.ArrayDeque;

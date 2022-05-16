@@ -7,11 +7,11 @@ package katya.client;
 
 import katya.client.generators.ConsoleGeneratorHumanBeing;
 import katya.client.generators.ScriptGeneratorHumanBeing;
-import katya.client.util.CommandListener;
-import katya.client.util.CommandToSend;
-import katya.client.util.RequestCreator;
-import katya.common.Response;
-import katya.common.Validator;
+import katya.client.util.workingWithCommand.CommandListener;
+import katya.client.util.workingWithCommand.CommandToSend;
+import katya.client.util.workingWithServer.RequestCreator;
+import katya.common.util.Response;
+import katya.common.util.Validator;
 import katya.common.entites.HumanBeing;
 import katya.common.util.CheckBoolean;
 import katya.common.util.Request;

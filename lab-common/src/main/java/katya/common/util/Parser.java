@@ -1,4 +1,4 @@
-package katya.common;
+package katya.common.util;
 
 import katya.common.entites.HumanBeing;
 

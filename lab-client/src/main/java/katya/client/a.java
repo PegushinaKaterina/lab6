@@ -1,13 +1,5 @@
 package katya.client;
 
-import katya.common.DeSerializer;
-import katya.common.Response;
-import katya.common.Serializer;
-import katya.common.util.Request;
-
-import java.io.IOException;
-import java.net.*;
-
 public class a {
     public class ClientSocketWorker {
     }

@@ -1,6 +1,6 @@
 package katya.server.generators;
 
-import katya.common.Validator;
+import katya.common.util.Validator;
 import katya.common.entites.HumanBeing;
 import katya.common.state.State;
 import katya.common.util.CheckBoolean;

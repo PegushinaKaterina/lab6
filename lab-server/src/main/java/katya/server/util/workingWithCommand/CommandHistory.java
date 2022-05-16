@@ -1,4 +1,4 @@
-package katya.server;
+package katya.server.util.workingWithCommand;
 
 import java.util.ArrayDeque;
 

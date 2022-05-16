@@ -1,9 +1,5 @@
 package katya.server.commands.serverCommands;
 
-import katya.common.Response;
-import katya.common.Validator;
-import katya.server.commands.clientCommands.AbstractClientCommand;
-
 import java.util.HashMap;
 
 public class HelpCommand extends AbstractServerCommand{

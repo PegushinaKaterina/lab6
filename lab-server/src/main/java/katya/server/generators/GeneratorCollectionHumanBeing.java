@@ -1,7 +1,7 @@
 package katya.server.generators;
 
 import katya.common.entites.HumanBeing;
-import katya.server.FileWorker;
+import katya.server.util.workingWithCommand.FileWorker;
 import katya.server.entites.CollectionManager;
 
 import java.io.FileNotFoundException;

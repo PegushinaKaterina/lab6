@@ -1,7 +1,10 @@
-package katya.server;
+package katya.server.util;
+
+import katya.server.util.workingWithCommand.CommandListener;
+import katya.server.util.workingWithCommand.CommandManager;
 
 public class ConsoleThread extends Thread{
-    private final CommandListener CommandListener;
+    private final katya.server.util.workingWithCommand.CommandListener CommandListener;
     private final CommandManager commandManager;
 
     public ConsoleThread(CommandListener CommandListener, CommandManager commandManager) {

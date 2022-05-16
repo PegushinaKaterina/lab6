@@ -1,7 +1,9 @@
-package katya.server;
+package katya.server.util;
 
-import katya.common.Response;
+import katya.common.util.Response;
 import katya.common.util.Request;
+import katya.server.util.workingWithClient.ServerSocketWorker;
+import katya.server.util.workingWithCommand.CommandManager;
 
 import java.io.IOException;
 

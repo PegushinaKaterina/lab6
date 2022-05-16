@@ -1,18 +1,14 @@
-package katya.client;
+package katya.client.util.workingWithServer;
 
-import katya.common.DeSerializer;
-import katya.common.Response;
-import katya.common.Serializer;
+import katya.common.util.DeSerializer;
+import katya.common.util.Response;
+import katya.common.util.Serializer;
 import katya.common.util.Request;
 
 import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.util.Iterator;
-import java.util.Set;
 
 public class ClientSocketWorker {
     private final int DEFAULT_PORT = 324;

@@ -1,18 +1,17 @@
-package katya.client;
+package katya.client.util.workingWithServer;
 
-import katya.common.Validator;
+import katya.common.util.Validator;
 import katya.common.util.CheckBoolean;
 
 import java.io.IOException;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class GeneratorClientSocetWorker {
+public class GeneratorClientSocketWorker {
     private final int maxPort = 65535;
     ClientSocketWorker clientSocketWorker;
-    GeneratorClientSocetWorker(){
+    public GeneratorClientSocketWorker(){
         askForAddress();
         askForPort();
     }
@@ -21,7 +20,7 @@ public class GeneratorClientSocetWorker {
         Scanner scanner = new Scanner(System.in);
         boolean answer = true;
         try (scanner) {
-            String stringAnswer = scanner.nextLine().trim();
+            String stringAnswer = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
             answer = new Validator<Boolean>(stringAnswer)
                     .withCheckingNull(false)
                     .withCheckingFunction(CheckBoolean::checkBoolean, "Ответ должен быть да/нет")

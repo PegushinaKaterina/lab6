@@ -1,8 +1,8 @@
-package katya.server;
+package katya.server.util.workingWithClient;
 
-import katya.common.DeSerializer;
-import katya.common.Response;
-import katya.common.Serializer;
+import katya.common.util.DeSerializer;
+import katya.common.util.Response;
+import katya.common.util.Serializer;
 import katya.common.util.Request;
 
 import java.io.IOException;
