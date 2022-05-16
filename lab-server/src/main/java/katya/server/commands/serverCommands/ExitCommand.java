@@ -9,16 +9,14 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class ExitCommand extends AbstractServerCommand{
-    private final Scanner scanner;
-    private final Parser parser;
+    private final Scanner scanner = new Scanner(System.in);
+    private final Parser parser = new Parser();
     private final CollectionManager collectionManager;
 
-    public ExitCommand(Scanner scanner, Parser parser, CollectionManager collectionManager) {
+    public ExitCommand(CollectionManager collectionManager) {
         super(new AbstractServerCommand.AbstractCommandBuilder()
                 .withName("exit")
                 .withDescription("завершить программу"));
-        this.scanner = scanner;
-        this.parser = parser;
         this.collectionManager = collectionManager;
     }
 

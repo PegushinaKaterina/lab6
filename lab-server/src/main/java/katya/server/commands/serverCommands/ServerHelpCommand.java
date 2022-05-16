@@ -2,10 +2,10 @@ package katya.server.commands.serverCommands;
 
 import java.util.HashMap;
 
-public class HelpCommand extends AbstractServerCommand{
+public class ServerHelpCommand extends AbstractServerCommand{
 
     private final HashMap<String, AbstractServerCommand> availableCommands;
-    public HelpCommand(HashMap<String, AbstractServerCommand> availableCommands) {
+    public ServerHelpCommand(HashMap<String, AbstractServerCommand> availableCommands) {
         super(new AbstractServerCommand.AbstractCommandBuilder()
                 .withName("help")
                 .withDescription("вывести справку по доступным командам"));

@@ -35,7 +35,8 @@ public class Response {
             this.collectionToResponse = collectionToResponse;
             return this;
         }
-        public Response build(){
+
+        public Response build() {
             return new Response(this);
         }
 
@@ -54,13 +55,23 @@ public class Response {
     }
 
     public String getInfoAboutResponse() {
-        // что-то
-        return null;
+        return "Response contains: " + (messageToResponse == null ? "" : "message")
+                + (humanBeingToResponse == null ? "" : ", humanBeing")
+                + (collectionToResponse == null ? "" : ", collection");
     }
 
     @Override
     public String toString() {
-        // что-то
-        return null;
+        StringBuilder collection = new StringBuilder();
+        if (!(collectionToResponse == null)) {
+            for (HumanBeing humanBeing : collectionToResponse) {
+                collection.append(humanBeing.toString()).append("\n");
+            }
+            return String.valueOf(collection);
+        }
+        return (messageToResponse == null ? "" : messageToResponse)
+                + (humanBeingToResponse == null ? "" : "\n" + humanBeingToResponse)
+                + ((collectionToResponse == null) ? "" : "\n"
+                + collection);
     }
 }

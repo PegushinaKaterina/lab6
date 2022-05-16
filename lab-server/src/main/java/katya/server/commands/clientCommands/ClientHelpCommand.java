@@ -5,10 +5,10 @@ import katya.common.util.Request;
 
 import java.util.HashMap;
 
-public class HelpCommand extends AbstractClientCommand {
+public class ClientHelpCommand extends AbstractClientCommand {
     private final HashMap<String, AbstractClientCommand> availableCommands;
 
-    public HelpCommand(HashMap<String, AbstractClientCommand> availableCommands) {
+    public ClientHelpCommand(HashMap<String, AbstractClientCommand> availableCommands) {
         super(new AbstractCommandBuilder()
                 .withName("help")
                 .withQuantityOfArgs(0)

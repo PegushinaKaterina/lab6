@@ -1,5 +1,6 @@
 package katya.client.generators;
 
+import katya.common.util.Parser;
 import katya.common.util.Validator;
 import katya.common.entites.HumanBeing;
 import katya.common.state.State;
@@ -17,14 +18,7 @@ public class ScriptGeneratorHumanBeing extends State {
     @Override
     protected void generateHumanBeingFields() {
         try {
-            String[] stringHumanBeing = new String[10];
-            for (int i = 0; i < 10; i++){
-                if(super.scanner.hasNextLine()){
-                    stringHumanBeing[i] = super.scanner.nextLine();
-                } else {
-                    throw new IllegalArgumentException("Неверное количество аргументов, данная команда требует 10 аргументов");
-                }
-            }
+            stringHumanBeing = Parser.stringToHumanBeingStringParserFromScript(super.scanner);
             setName();
             setCoordinates();
             setRealHero();

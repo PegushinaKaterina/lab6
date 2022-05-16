@@ -1,5 +1,6 @@
 package katya.server.generators;
 
+import katya.common.util.Parser;
 import katya.common.util.Validator;
 import katya.common.entites.HumanBeing;
 import katya.common.state.State;
@@ -18,11 +19,7 @@ public class FileGeneratorHumanBeing extends State {
     @Override
     protected void generateHumanBeingFields() {
         try {
-            String string = super.scanner.nextLine();
-            stringHumanBeing = string.split(",");
-            for (int i = 0; i < stringHumanBeing.length; i++) {
-                stringHumanBeing[i] = stringHumanBeing[i].trim();
-            }
+            stringHumanBeing = Parser.stringToHumanBeingStringParserFromFile(super.scanner);
             Validator.validateQuantityOfArgs(stringHumanBeing, QUANTITY_OF_ARGS);
             setName();
             setCoordinates();

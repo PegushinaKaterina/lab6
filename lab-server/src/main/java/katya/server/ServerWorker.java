@@ -1,6 +1,5 @@
 package katya.server;
 
-import katya.server.commands.clientCommands.*;
 import katya.server.entites.CollectionManager;
 import katya.server.util.ConsoleThread;
 import katya.server.util.RequestThread;
@@ -27,20 +26,7 @@ public class ServerWorker {
         try {
             FileWorker fileWorker = new FileWorker(fileName);
             collectionManager = new CollectionManager(fileWorker);
-            commandManager = new CommandManager(
-                    new HelpCommand(CommandManager.CLIENT_AVAILABLE_COMMANDS),
-                    new InfoCommand(collectionManager),
-                    new ShowCommand(collectionManager),
-                    new AddCommand(collectionManager),
-                    new UpdateCommand(collectionManager),
-                    new RemoveByIdCommand(collectionManager),
-                    new ClearCommand(collectionManager),
-                    new RemoveHeadCommand(collectionManager),
-                    new RemoveLoverCommand(collectionManager),
-                    new HistoryCommand(CommandManager.commandHistory.getHistory()),
-                    new RemoveAllByMinutesOfWaitingCommand(collectionManager),
-                    new SumOfMinutesOfWaitingCommand(collectionManager),
-                    new CountByImpactSpeedCommand(collectionManager));
+            commandManager = new CommandManager(collectionManager);
             GeneratorServerSocketWorker generatorServerSocketWorker = new GeneratorServerSocketWorker();
             ServerSocketWorker serverSocketWorker = generatorServerSocketWorker.getServerSocketWorker();
             RequestThread requestThread = new RequestThread(serverSocketWorker, commandManager);
