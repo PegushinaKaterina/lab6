@@ -1,5 +1,7 @@
 package katya.client.util;
 
+import katya.client.commands.ExecuteScriptCommand;
+import katya.client.commands.ExitCommand;
 import katya.common.Validator;
 import katya.common.entites.HumanBeing;
 
@@ -16,7 +18,7 @@ public final class AvailableCommands {
     public static final Set<String> COMMANDS_WITH_HUMAN_BEING_AND_ID_ARGS = new HashSet<>();
     public static final Set<String> COMMANDS_WITH_MINUTES_OF_WAITING_ARG = new HashSet<>();
     public static final Set<String> COMMANDS_WITH_IMPACT_SPEED_ARG = new HashSet<>();
-    public static final String SCRIPT_ARGUMENT_COMMAND;
+    public static final HashMap<String, Runnable> CLIENTS_COMMANDS = new HashMap<>();
 
     static {
         Collections.addAll(COMMANDS_WITHOUT_ARGS,
@@ -44,7 +46,6 @@ public final class AvailableCommands {
         Collections.addAll(COMMANDS_WITH_IMPACT_SPEED_ARG,
                 "count_by_impact_speed"
         );
-        SCRIPT_ARGUMENT_COMMAND = "execute_script";
     }
 
     private AvailableCommands() {

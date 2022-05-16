@@ -1,64 +1,66 @@
 package katya.server;
 
-import katya.common.commands.AbstractCommand;
-import katya.server.CommandHistory;
-import katya.server.commands.AbstractCommand;
+import katya.common.Response;
+import katya.common.util.Request;
+import katya.server.commands.clientCommands.AbstractClientCommand;
+import katya.server.commands.serverCommands.AbstractServerCommand;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 
 public class CommandManager {
-    public static final HashMap<String, AbstractCommand> AVAILABLE_COMMANDS = new HashMap<>();
+    public static final HashMap<String, AbstractClientCommand> CLIENT_AVAILABLE_COMMANDS = new HashMap<>();
+    public static final HashMap<String, AbstractServerCommand> SERVER_AVAILABLE_COMMANDS = new HashMap<>();;
+    private static boolean statusOfCommandListening = true;
+
     public static CommandHistory commandHistory = new CommandHistory();
 
-    public CommandManager(AbstractCommand helpCommand,
-                          AbstractCommand infoCommand,
-                          AbstractCommand showCommand,
-                          AbstractCommand addCommand,
-                          AbstractCommand updateCommand,
-                          AbstractCommand removeByIdCommand,
-                          AbstractCommand clearCommand,
-                          AbstractCommand saveCommand,
-                          AbstractCommand executeScriptCommand,
-                          AbstractCommand exitCommand,
-                          AbstractCommand removeHead,
-                          AbstractCommand removeLower,
-                          AbstractCommand historyCommand,
-                          AbstractCommand removeAllByMinutesOfWaiting,
-                          AbstractCommand sumOfMinutesOfWaiting,
-                          AbstractCommand countByImpactSpeed
+    public CommandManager(AbstractClientCommand helpCommand,
+                          AbstractClientCommand infoCommand,
+                          AbstractClientCommand showCommand,
+                          AbstractClientCommand addCommand,
+                          AbstractClientCommand updateCommand,
+                          AbstractClientCommand removeByIdCommand,
+                          AbstractClientCommand clearCommand,
+                          AbstractClientCommand removeHead,
+                          AbstractClientCommand removeLower,
+                          AbstractClientCommand historyCommand,
+                          AbstractClientCommand removeAllByMinutesOfWaiting,
+                          AbstractClientCommand sumOfMinutesOfWaiting,
+                          AbstractClientCommand countByImpactSpeed
     ) {
-        AVAILABLE_COMMANDS.put(helpCommand.getName(), helpCommand);
-        AVAILABLE_COMMANDS.put(infoCommand.getName(), infoCommand);
-        AVAILABLE_COMMANDS.put(showCommand.getName(), showCommand);
-        AVAILABLE_COMMANDS.put(addCommand.getName(), addCommand);
-        AVAILABLE_COMMANDS.put(updateCommand.getName(), updateCommand);
-        AVAILABLE_COMMANDS.put(removeByIdCommand.getName(), removeByIdCommand);
-        AVAILABLE_COMMANDS.put(clearCommand.getName(), clearCommand);
-        AVAILABLE_COMMANDS.put(saveCommand.getName(), saveCommand);
-        AVAILABLE_COMMANDS.put(executeScriptCommand.getName(), executeScriptCommand);
-        AVAILABLE_COMMANDS.put(exitCommand.getName(), exitCommand);
-        AVAILABLE_COMMANDS.put(removeHead.getName(), removeHead);
-        AVAILABLE_COMMANDS.put(removeLower.getName(), removeLower);
-        AVAILABLE_COMMANDS.put(historyCommand.getName(), historyCommand);
-        AVAILABLE_COMMANDS.put(removeAllByMinutesOfWaiting.getName(), removeAllByMinutesOfWaiting);
-        AVAILABLE_COMMANDS.put(sumOfMinutesOfWaiting.getName(), sumOfMinutesOfWaiting);
-        AVAILABLE_COMMANDS.put(countByImpactSpeed.getName(), countByImpactSpeed);
-
+        CLIENT_AVAILABLE_COMMANDS.put(helpCommand.getName(), helpCommand);
+        CLIENT_AVAILABLE_COMMANDS.put(infoCommand.getName(), infoCommand);
+        CLIENT_AVAILABLE_COMMANDS.put(showCommand.getName(), showCommand);
+        CLIENT_AVAILABLE_COMMANDS.put(addCommand.getName(), addCommand);
+        CLIENT_AVAILABLE_COMMANDS.put(updateCommand.getName(), updateCommand);
+        CLIENT_AVAILABLE_COMMANDS.put(removeByIdCommand.getName(), removeByIdCommand);
+        CLIENT_AVAILABLE_COMMANDS.put(clearCommand.getName(), clearCommand);
+        CLIENT_AVAILABLE_COMMANDS.put(removeHead.getName(), removeHead);
+        CLIENT_AVAILABLE_COMMANDS.put(removeLower.getName(), removeLower);
+        CLIENT_AVAILABLE_COMMANDS.put(historyCommand.getName(), historyCommand);
+        CLIENT_AVAILABLE_COMMANDS.put(removeAllByMinutesOfWaiting.getName(), removeAllByMinutesOfWaiting);
+        CLIENT_AVAILABLE_COMMANDS.put(sumOfMinutesOfWaiting.getName(), sumOfMinutesOfWaiting);
+        CLIENT_AVAILABLE_COMMANDS.put(countByImpactSpeed.getName(), countByImpactSpeed);
     }
 
-    public void performCommand(String command) {
-        command = command.trim();
-        String[] commandString = command.split(" ");
-        String commandName = commandString[0].toLowerCase(Locale.ROOT);
-        String[] commandsArgs = Arrays.copyOfRange(commandString, 1, commandString.length);
-        if (AVAILABLE_COMMANDS.containsKey(commandName)) {
-            AbstractCommand executingCommand = AVAILABLE_COMMANDS.get(commandName);
-            executingCommand.executeCommand(commandsArgs);
-            commandHistory.pushCommand(commandName);
+    public Response executeClientCommand(Request request) {
+        commandHistory.pushCommand(request.getCurrentTime().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                + " " + request.getClientInfo() + ": " + request.getCommandName());
+        return CLIENT_AVAILABLE_COMMANDS.get(request.getCommandName()).executeCommand(request);
+    }
+
+    public String executeServerCommand(String commandName) {
+        if (SERVER_AVAILABLE_COMMANDS.containsKey(commandName)) {
+            return SERVER_AVAILABLE_COMMANDS.get(commandName).executeCommand();
         } else {
-            System.out.println("Такой команды не существует. Для справки введите команду help");
+            return ("Такой команды не существует, для того, чтобы увидеть список команд введите HELP");
         }
     }
+    public boolean getStatusOfCommandListening() {
+        return statusOfCommandListening;
+    }
+
 }

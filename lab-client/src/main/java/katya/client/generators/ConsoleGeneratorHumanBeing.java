@@ -18,7 +18,7 @@ public class ConsoleGeneratorHumanBeing extends State {
             setValue("Введите имя",
                     this::setName);
             setValue("Введите координату X" +
-                            "значение должно быть целым числом не больше " + HumanBeing.Coordinates.X_MAX,
+                             "значение должно быть целым числом не больше " + HumanBeing.Coordinates.X_MAX,
                     this::setX);
             setValue("Введите координату Y" + "значение должно быть целым числом",
                     this::setY);

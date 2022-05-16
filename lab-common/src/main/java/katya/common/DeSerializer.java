@@ -3,6 +3,7 @@ package katya.common;
 import katya.common.util.Request;
 
 import java.io.*;
+import java.nio.ByteBuffer;
 
 public class DeSerializer {
 
@@ -17,8 +18,8 @@ public class DeSerializer {
         }
     }
 
-    public static Response deSerializeResponse(byte[] acceptedBuf) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(acceptedBuf);
+    public static Response deSerializeResponse(ByteBuffer byteBuffer) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
         try (byteArrayInputStream; objectInputStream) {
             return (Response) objectInputStream.readObject();

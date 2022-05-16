@@ -5,15 +5,16 @@ import katya.common.util.Request;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.nio.ByteBuffer;
 
 public class Serializer {
-    public static byte[] serializeRequest(Request request) throws IOException {
+    public static ByteBuffer serializeRequest(Request request) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         try (byteArrayOutputStream; objectOutputStream){
             objectOutputStream.writeObject(request);
             objectOutputStream.flush();
-            return byteArrayOutputStream.toByteArray();
+            return ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
         }
     }
 

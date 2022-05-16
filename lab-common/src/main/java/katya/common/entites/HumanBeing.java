@@ -197,11 +197,7 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
 
     @Override
     public int compareTo(HumanBeing humanBeing) {
-        if (name.compareTo(humanBeing.getName()) == 0) {
-            return Long.compare(id, humanBeing.getId());
-        } else {
             return name.compareTo(humanBeing.getName());
-        }
     }
 
     @Override

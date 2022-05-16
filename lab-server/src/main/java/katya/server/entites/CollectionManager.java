@@ -1,22 +1,20 @@
-package katya.server;
+package katya.server.entites;
 
-import katya.common.FileWorker;
 import katya.common.entites.HumanBeing;
-import katya.common.state.GeneratorHumanBeing;
+import katya.server.FileWorker;
 
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
-public class CollectionHumanBeing {
+public class CollectionManager {
     public static long idCounter = 1;
     public Date creationDate;
-    LinkedList<HumanBeing> collectionHumanBeing = new LinkedList<>();
+    LinkedList<HumanBeing> collectionHumanBeing = new LinkedList<HumanBeing>();
     FileWorker fileWorker;
-    public static GeneratorHumanBeing generatorHumanBeing = new GeneratorHumanBeing();
 
-    public CollectionHumanBeing(FileWorker fileWorker) throws FileNotFoundException {
+    public CollectionManager(FileWorker fileWorker) throws FileNotFoundException {
         creationDate = new Date();
         this.fileWorker = fileWorker;
     }

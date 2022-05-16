@@ -1,15 +1,16 @@
-package katya.server.commands;
+package katya.server.commands.clientCommands;
 
-import java.util.ArrayDeque;
+import katya.common.Response;
+import katya.common.util.Request;
 
-public abstract class AbstractCommand {
+public abstract class AbstractClientCommand {
     private final String name; // Имя
     private final int quantityOfArgs; // Количество аргументов
     private final String description; // Описание
     private final String descriptionOfArgs; // Описание аргументов
     private final boolean generatesHumanBeing;
 
-    public AbstractCommand(AbstractCommandBuilder builder) {
+    public AbstractClientCommand(AbstractCommandBuilder builder) {
         this.name = builder.name;
         this.quantityOfArgs = builder.quantityOfArgs;
         this.description = builder.description;
@@ -50,7 +51,7 @@ public abstract class AbstractCommand {
         }
     }
 
-    public abstract void executeCommand(String[] commandArgs);
+    public abstract Response executeCommand(Request request);
 
     public String getName() {
         return name;

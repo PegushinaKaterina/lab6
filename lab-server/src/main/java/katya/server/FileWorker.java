@@ -8,7 +8,6 @@ import java.io.*;
 public class FileWorker {
     private final File file;
 
-
     public FileWorker(String fileName) throws FileNotFoundException {
         file = new File(fileName);
         if (!file.exists()) {
