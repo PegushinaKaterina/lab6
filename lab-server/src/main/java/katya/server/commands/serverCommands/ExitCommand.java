@@ -7,7 +7,7 @@ import katya.server.util.workingWithCommand.CommandManager;
 import java.io.IOException;
 import java.util.Scanner;
 
-import static katya.common.util.AnswerAccepter.acceptAnswer;
+import static katya.common.util.SocketInitializer.acceptAnswer;
 
 public class ExitCommand extends AbstractServerCommand {
     private final Scanner scanner = new Scanner(System.in);

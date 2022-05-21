@@ -1,23 +1,35 @@
 package katya.server.util.workingWithClient;
 
-import katya.common.util.Validator;
+import katya.common.util.SocketInitializer;
 
 import java.net.SocketException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import static katya.common.util.AnswerAccepter.acceptAnswer;
 
 public class GeneratorServerSocketWorker {
 
-    private final int maxPort = 65535;
     private ServerSocketWorker serverSocketWorker;
 
     public GeneratorServerSocketWorker(Scanner scanner) {
-        askForPort(scanner);
+        setPort(scanner);
     }
 
-    private void askForPort(Scanner scanner) {
+    private void setPort(Scanner scanner) {
+        boolean isRunning = true;
+        while (isRunning) {
+            try {
+                Integer port = SocketInitializer.askForPort(scanner);
+                serverSocketWorker = new ServerSocketWorker();
+                if (port != null) {
+                    serverSocketWorker.setPort(port);
+                }
+                isRunning = false;
+            } catch (SocketException e) {
+                System.out.println("Ошибка при установке порта");
+            }
+        }
+    }
+
+    /*private void askForPort(Scanner scanner) {
         String question = "Вы хотите использовать порт по умолчанию? Введите да/нет";
         System.out.println(question);
         boolean isRunning = true;
@@ -63,7 +75,7 @@ public class GeneratorServerSocketWorker {
             System.out.println("Введен недопустимый символ");
             System.exit(1);
         }
-    }
+    }*/
 
     public ServerSocketWorker getServerSocketWorker() {
         return serverSocketWorker;

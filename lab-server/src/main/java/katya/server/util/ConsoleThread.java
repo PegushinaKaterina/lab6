@@ -16,6 +16,7 @@ public class ConsoleThread extends Thread {
         this.scanner = scanner;
     }
 
+    @Override
     public void run() {
         while (commandManager.getStatusOfCommandListening()) {
             String command = commandListener.readCommand(scanner);

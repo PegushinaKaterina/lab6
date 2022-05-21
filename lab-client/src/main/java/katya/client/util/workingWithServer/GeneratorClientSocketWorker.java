@@ -1,24 +1,35 @@
 package katya.client.util.workingWithServer;
 
-import katya.common.util.Validator;
+import katya.common.util.SocketInitializer;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static katya.common.util.AnswerAccepter.acceptAnswer;
-
 public class GeneratorClientSocketWorker {
-    private final int maxPort = 65535;
     private ClientSocketWorker clientSocketWorker;
 
     public GeneratorClientSocketWorker(Scanner scanner) {
-        askForAddress(scanner);
-        askForPort(scanner);
+        setAddress(scanner);
+        setPort(scanner);
     }
 
+    private void setAddress(Scanner scanner) {
+        boolean isRunning = true;
+        while (isRunning) {
+            try {
+                clientSocketWorker = new ClientSocketWorker();
+                String address = SocketInitializer.askForAddress(scanner);
+                if (address != null) {
+                    clientSocketWorker.setAddress(address);
+                }
+                isRunning = false;
+            } catch (IOException e) {
+                System.out.println("Ошибка при установке адреса");
+            }
+        }
+    }
 
-    private void askForAddress(Scanner scanner) {
+    /*private void askForAddress(Scanner scanner) {
         String question = "Вы хотите использовать адрес сервера по умолчанию? Введите да/нет";
         System.out.println(question);
         boolean isRunning = true;
@@ -59,9 +70,16 @@ public class GeneratorClientSocketWorker {
             System.out.println("Введен недопустимый символ");
             System.exit(1);
         }
+    }*/
+
+    private void setPort(Scanner scanner) {
+        Integer port = SocketInitializer.askForPort(scanner);
+        if (port != null) {
+            clientSocketWorker.setPort(port);
+        }
     }
 
-    private void askForPort(Scanner scanner) {
+    /* private void askForPort(Scanner scanner) {
         String question = "Вы хотите использовать порт по умолчанию? Введите да/нет";
         System.out.println(question);
         boolean isRunning = true;
@@ -101,7 +119,7 @@ public class GeneratorClientSocketWorker {
             System.out.println("Введен недопустимый символ");
             System.exit(1);
         }
-    }
+    }*/
 
     public ClientSocketWorker getClientSocketWorker() {
         return clientSocketWorker;

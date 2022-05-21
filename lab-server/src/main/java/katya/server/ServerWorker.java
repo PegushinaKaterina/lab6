@@ -17,7 +17,6 @@ public class ServerWorker {
     private final String fileName;
     private final ServerCommandListener serverCommandListener = new ServerCommandListener();
 
-
     public ServerWorker(String fileName) {
         this.fileName = fileName;
     }

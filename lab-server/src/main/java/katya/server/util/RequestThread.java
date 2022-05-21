@@ -16,7 +16,7 @@ public class RequestThread extends Thread {
         this.commandManager = commandManager;
     }
 
-
+    @Override
     public void run() {
         while (commandManager.getStatusOfCommandListening()) {
             try {
