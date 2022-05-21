@@ -5,9 +5,8 @@ import java.util.Scanner;
 public class ServerCommandListener {
 
 
-    public String readCommand() {
-        Scanner scanner = new Scanner(System.in);
-        try (scanner){
+    public String readCommand(Scanner scanner) {
+        try {
             System.out.print("Введите команду: ");
             return scanner.nextLine().trim();
         } catch (NoSuchElementException e) {

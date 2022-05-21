@@ -7,7 +7,7 @@ public final class Server {
     }
 
     public static void main(String[] args) {
-        ServerWorker serverWorker = new ServerWorker("file.txt");
+        ServerWorker serverWorker = new ServerWorker("file.csv");
         serverWorker.startServerWorker();
 //        if (args.length == 1) {
 //            ServerWorker serverWorker = new ServerWorker(args[0]);

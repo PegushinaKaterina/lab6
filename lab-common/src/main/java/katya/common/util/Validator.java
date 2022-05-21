@@ -10,12 +10,19 @@ public class Validator<T> {
     private T value;
 
     public Validator(String string) {
-        this.string = string;
+        if ("".equals(string)) {
+            this.string = "null";
+        } else {
+            this.string = string;
+        }
     }
 
     public Validator(Scanner scanner) {
         try {
             this.string = scanner.nextLine();
+            if ("".equals(string)) {
+                string = "null";
+            }
         } catch (NoSuchElementException e) {
             System.out.println("Введен недопустимый символ");
             System.exit(1);
@@ -23,8 +30,8 @@ public class Validator<T> {
 
     }
 
-    public Validator<T> withCheckingNull(boolean nullable) {
-        if ("".equals(string)) {
+    public Validator<T> withCheckingNull(boolean nullable) throws IllegalArgumentException {
+        if ("null".equals(string)) {
             if (nullable) {
                 value = null;
             } else {
@@ -35,7 +42,7 @@ public class Validator<T> {
     }
 
     public Validator<T> withCheckingFunction(Function<String, T> function, String description) {
-        if (!"".equals(string)) {
+        if (!"null".equals(string)) {
             try {
                 value = function.apply(string);
             } catch (IllegalArgumentException e) {
@@ -46,7 +53,7 @@ public class Validator<T> {
     }
 
     public Validator<T> withCheckingPredicate(Predicate<Object> predicate, String error) {
-        if (!"".equals(string)) {
+        if (!"null".equals(string)) {
             if (!predicate.test(value)) {
                 throw new IllegalArgumentException(error);
             }
@@ -55,7 +62,8 @@ public class Validator<T> {
     }
 
     public T getValue() {
-        if (value.getClass().equals(String.class) && !"".equals(string)) {
+        if (value == null && !"null".equals(string)) {
+            // if (value.getClass().equals(String.class) && !"".equals(string)) {
             value = (T) string;
         }
         return value;

@@ -1,5 +1,6 @@
 package katya.server.commands.serverCommands;
 
+import katya.server.AbstractServerCommand;
 import katya.server.entites.CollectionManager;
 
 import java.io.IOException;

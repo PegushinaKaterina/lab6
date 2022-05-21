@@ -37,7 +37,7 @@ public final class Parser {
                 + humanBeing.getHasToothpick() + "," + humanBeing.getImpactSpeed() + ","
                 + humanBeing.getSoundtrackName() + "," + humanBeing.getMinutesOfWaiting() + ","
                 + humanBeing.getWeaponType() + ","
-                + (humanBeing.getCar().getCool() == null ? " " : humanBeing.getCar().getCool()) + "\n";
+                + (humanBeing.getCar().getCool() == null ? "null" : humanBeing.getCar().getCool()) + "\n";
         return string;
     }
 }

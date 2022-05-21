@@ -2,6 +2,7 @@ package katya.server.commands.clientCommands;
 
 import katya.common.util.Response;
 import katya.common.util.Request;
+import katya.common.util.ResponseBuilder;
 import katya.server.entites.CollectionManager;
 
 public class ShowCommand extends AbstractClientCommand {
@@ -18,8 +19,7 @@ public class ShowCommand extends AbstractClientCommand {
 
     @Override
     public Response executeCommand(Request request) {
-        return new Response.ResponseBuilder()
-                .withMessageToResponse(collectionManager.show())
-                .build();
+        return new Response(new ResponseBuilder()
+                .withCollectionToResponse(collectionManager.getCollectionHumanBeing()));
     }
 }

@@ -16,29 +16,29 @@ public class ConsoleGeneratorHumanBeing extends State {
     }
 
     @Override
-    protected void generateHumanBeingFields() {
-            setValue("Введите имя",
+    public void generateHumanBeingFields() {
+            setValue("Введите имя ",
                     this::setName);
-            setValue("Введите координату X"
+            setValue("Введите координату X, "
                             + "значение должно быть целым числом не больше " + Coordinates.X_MAX,
                     this::setX);
-            setValue("Введите координату Y" + "значение должно быть целым числом",
+            setValue("Введите координату Y, " + "значение должно быть целым числом",
                     this::setY);
-            setValue("Это реальный герой или нет?" + "значение должно быть Да или Нет",
+            setValue("Это реальный герой или нет? " + "значение должно быть Да или Нет",
                     this::setRealHero);
-            setValue("У героя есть зубочистка?" + "значение должно быть Да или Нет",
+            setValue("У героя есть зубочистка? " + "значение должно быть Да или Нет",
                     this::setHasToothpick);
-            setValue("Введите скорость удара"
+            setValue("Введите скорость удара, "
                             + "значение должно быть вещественным числом и больше " + HumanBeing.IMPACT_SPEED_MIN,
                     this::setImpactSpeed);
-            setValue("Введите название саундтрека",
+            setValue("Введите название саундтрека ",
                     this::setSoundtrackName);
-            setValue("Введите время ожидания" + "значение должно быть целым числом",
+            setValue("Введите время ожидания, " + "значение должно быть целым числом",
                     this::setMinutesOfWaiting);
-            setValue("Введите тип оружия"
+            setValue("Введите тип оружия, "
                             + "допустимые значения: \n" + WeaponType.show() + "регистр должен сохраняться",
                     this::setWeaponType);
-            setValue("Машина крутая?"
+            setValue("Машина крутая? "
                             + "значение должно быть Да или Нет. Если хотите оставить это значение, пустым нажмите enter",
                     this::setCar);
     }
@@ -51,84 +51,84 @@ public class ConsoleGeneratorHumanBeing extends State {
                 runnable.run();
                 isRunning = false;
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage() + "повторите ввод");
+                System.out.println(e.getMessage() + "\n Повторите ввод");
             }
         }
     }
 
     public void setName() throws IllegalArgumentException {
-        super.name = new Validator<String>(super.scanner)
+        super.setName(new Validator<String>(super.getScanner())
                 .withCheckingNull(false)
-                .getValue();
+                .getValue());
     }
 
     public void setX() throws IllegalArgumentException {
-        super.x = new Validator<Integer>(super.scanner)
+        super.setX(new Validator<Integer>(super.getScanner())
                 .withCheckingNull(false)
                 .withCheckingFunction(Integer::parseInt, "значение координаты X должно быть целым числом")
                 .withCheckingPredicate(arg -> (int) arg < Coordinates.X_MAX,
                         "Значение координаты X должно быть не больше " + Coordinates.X_MAX)
-                .getValue();
+                .getValue());
     }
 
     public void setY() throws IllegalArgumentException {
-        super.y = new Validator<Integer>(super.scanner)
+        super.setY(new Validator<Integer>(super.getScanner())
                 .withCheckingNull(false)
                 .withCheckingFunction(Integer::parseInt, "значение координаты Y должно быть целым числом")
-                .getValue();
+                .getValue());
     }
 
     public void setRealHero() throws IllegalArgumentException {
-        super.realHero = new Validator<Boolean>(super.scanner)
+        super.setRealHero(new Validator<Boolean>(super.getScanner())
                 .withCheckingNull(false)
                 .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"Это реальный герой\" должно быть Да или Нет")
-                .getValue();
+                .getValue());
     }
 
     public void setHasToothpick() throws IllegalArgumentException {
-        super.hasToothpick = new Validator<Boolean>(super.scanner)
+        super.setHasToothpick(new Validator<Boolean>(super.getScanner())
                 .withCheckingNull(false)
                 .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"У человека есть зубочистка\" должно быть Да или Нет")
-                .getValue();
+                .getValue());
     }
 
     public void setImpactSpeed() throws IllegalArgumentException {
-        super.impactSpeed = new Validator<Double>(super.scanner)
+        super.setImpactSpeed(new Validator<Double>(super.getScanner())
                 .withCheckingNull(false)
                 .withCheckingFunction(Double::parseDouble, "значение скорости удара должно быть вещественным числом")
                 .withCheckingPredicate(arg -> (Double) arg > HumanBeing.IMPACT_SPEED_MIN,
                         "Значение скорости удара должно быть больше " + HumanBeing.IMPACT_SPEED_MIN)
-                .getValue();
+                .getValue());
 
     }
 
     public void setSoundtrackName() throws IllegalArgumentException {
-        super.soundtrackName = new Validator<String>(super.scanner)
+        super.setSoundtrackName(new Validator<String>(super.getScanner())
                 .withCheckingNull(false)
-                .getValue();
+                .getValue());
     }
 
     public void setMinutesOfWaiting() throws IllegalArgumentException {
-        super.minutesOfWaiting = new Validator<Integer>(super.scanner)
+        super.setMinutesOfWaiting(new Validator<Integer>(super.getScanner())
                 .withCheckingNull(false)
                 .withCheckingFunction(Integer::parseInt, "значение времени ожидания должно быть целым числом")
-                .getValue();
+                .getValue());
     }
 
     public void setWeaponType() throws IllegalArgumentException {
-        super.weaponType = new Validator<WeaponType>(super.scanner)
+        super.setWeaponType(new Validator<WeaponType>(super.getScanner())
                 .withCheckingNull(false)
                 .withCheckingFunction(WeaponType::valueOf,
                         "тип оружия должен быть из списка: \n" + WeaponType.show() + "Регистр должен сохраняться")
-                .getValue();
+                .getValue());
 
     }
 
     public void setCar() throws IllegalArgumentException {
-        super.cool = new Validator<Boolean>(super.scanner)
+        super.setCool(new Validator<Boolean>(super.getScanner())
                 .withCheckingNull(true)
                 .withCheckingFunction(CheckBoolean::checkBoolean,
                         "значение \"У человека есть крутая машина\" должно быть Да или Нет, или быть пустым")
-                .getValue();
+                .getValue());
     }
 }

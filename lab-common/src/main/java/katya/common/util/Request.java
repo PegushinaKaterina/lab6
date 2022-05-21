@@ -2,9 +2,10 @@ package katya.common.util;
 
 import katya.common.entites.HumanBeing;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public final class Request {
+public final class Request implements Serializable {
     private final String commandName;
     private String clientInfo;
     private LocalTime currentTime;
@@ -13,12 +14,12 @@ public final class Request {
     private final Double doubleArgument;
     private final HumanBeing humanBeingArgument;
 
-    private Request(RequestBuilder requestBuilder) {
-        this.commandName = requestBuilder.commandName;
-        this.longArgument = requestBuilder.longArgument;
-        this.integerArgument = requestBuilder.integerArgument;
-        this.doubleArgument = requestBuilder.doubleArgument;
-        this.humanBeingArgument = requestBuilder.humanBeingArgument;
+    public Request(RequestBuilder requestBuilder) {
+        this.commandName = requestBuilder.getCommandName();
+        this.longArgument = requestBuilder.getLongArgument();
+        this.integerArgument = requestBuilder.getIntegerArgument();
+        this.doubleArgument = requestBuilder.getDoubleArgument();
+        this.humanBeingArgument = requestBuilder.getHumanBeingArgument();
     }
 
     public String getCommandName() {
@@ -62,43 +63,5 @@ public final class Request {
     public String toString() {
         //что-то написать
         return null;
-    }
-
-    public static class RequestBuilder {
-        private String commandName;
-        private Long longArgument;
-        private Integer integerArgument;
-        private Double doubleArgument;
-        private HumanBeing humanBeingArgument;
-
-        public RequestBuilder withName(String commandName) {
-            this.commandName = commandName;
-            return this;
-        }
-
-        public RequestBuilder withLongArgument(Long longArgument) {
-            this.longArgument = longArgument;
-            return this;
-        }
-
-        public RequestBuilder withIntegerArgument(Integer integerArgument) {
-            this.integerArgument = integerArgument;
-            return this;
-        }
-
-        public RequestBuilder withDoubleArgument(Double doubleArgument) {
-            this.doubleArgument = doubleArgument;
-            return this;
-        }
-
-        public RequestBuilder withHumanBeingArgument(HumanBeing humanBeingArgument) {
-            this.humanBeingArgument = humanBeingArgument;
-            return this;
-        }
-
-        public Request build() {
-            return new Request(this);
-        }
-
     }
 }

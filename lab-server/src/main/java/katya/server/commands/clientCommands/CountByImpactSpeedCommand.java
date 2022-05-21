@@ -1,7 +1,8 @@
 package katya.server.commands.clientCommands;
 
-import katya.common.util.Response;
 import katya.common.util.Request;
+import katya.common.util.Response;
+import katya.common.util.ResponseBuilder;
 import katya.server.entites.CollectionManager;
 
 public class CountByImpactSpeedCommand extends AbstractClientCommand {
@@ -19,8 +20,14 @@ public class CountByImpactSpeedCommand extends AbstractClientCommand {
 
     @Override
     public Response executeCommand(Request request) {
-        return new Response.ResponseBuilder()
-                .withMessageToResponse(collectionManager.countByImpactSpeed(request.getDoubleArgument()))
-                .build();
+        try {
+            return new Response(new ResponseBuilder()
+                    .withMessageToResponse(collectionManager
+                            .countByImpactSpeed(request.getDoubleArgument())));
+        } catch (IllegalArgumentException e) {
+            return new Response(new ResponseBuilder()
+                    .withMessageToResponse(e.getMessage()));
+        }
+
     }
 }

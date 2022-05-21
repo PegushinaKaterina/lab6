@@ -1,11 +1,13 @@
 package katya.server.commands.serverCommands;
 
+import katya.server.AbstractServerCommand;
 import katya.server.entites.CollectionManager;
 import katya.server.util.workingWithCommand.CommandManager;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Scanner;
+
+import static katya.common.util.AnswerAccepter.acceptAnswer;
 
 public class ExitCommand extends AbstractServerCommand {
     private final Scanner scanner = new Scanner(System.in);
@@ -20,26 +22,39 @@ public class ExitCommand extends AbstractServerCommand {
 
     @Override
     public String executeCommand() {
-        chooseSaving();
+        askForSave(scanner);
         CommandManager.changeStatus();
+        System.out.println("Работа сервера завершена");
+        scanner.close();
+        System.exit(0);
         return "Работа сервера завершена";
     }
 
-    private void chooseSaving() {
-        System.out.println(("Do you want to save changes? [y/n]"));
+    private void save(boolean answer) {
         try {
-            String s = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
-            if ("n".equals(s)) {
-                System.out.println(("You lost all of your data )="));
-            } else if ("y".equals(s)) {
+            if (answer) {
                 collectionManager.getFileWorker().fileWriter(collectionManager);
-                System.out.println(("Collection was successfully saved"));
+                System.out.println(("Коллекция была успешно сохранена"));
             } else {
-                System.out.println(("You entered not valid symbol, try again"));
-                chooseSaving();
+                System.out.println("Вы потеряли все изменения )=");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Возникла проблема при сохранении в файл");
+        }
+    }
+
+    private void askForSave(Scanner scanner) {
+        String question = "Вы хотите сохраниться? Введите да/нет";
+        System.out.println(question);
+        boolean isRunning = true;
+        while (isRunning) {
+            try {
+                boolean answer = acceptAnswer(scanner);
+                save(answer);
+                isRunning = false;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }

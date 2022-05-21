@@ -1,7 +1,8 @@
 package katya.server.commands.clientCommands;
 
-import katya.common.util.Response;
 import katya.common.util.Request;
+import katya.common.util.Response;
+import katya.common.util.ResponseBuilder;
 import katya.server.entites.CollectionManager;
 
 public class RemoveHeadCommand extends AbstractClientCommand {
@@ -18,8 +19,13 @@ public class RemoveHeadCommand extends AbstractClientCommand {
 
     @Override
     public Response executeCommand(Request request) {
-        return new Response.ResponseBuilder()
-                .withMessageToResponse(collectionManager.removeHead())
-                .build();
+        try {
+            return new Response(new ResponseBuilder()
+                    .withMessageToResponse(collectionManager.removeHead()));
+        } catch (IllegalArgumentException e) {
+            return new Response(new ResponseBuilder()
+                    .withMessageToResponse(e.getMessage()));
+        }
+
     }
 }

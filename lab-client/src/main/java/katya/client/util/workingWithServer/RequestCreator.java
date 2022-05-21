@@ -2,9 +2,10 @@ package katya.client.util.workingWithServer;
 
 import katya.client.util.workingWithCommand.AvailableCommands;
 import katya.client.util.workingWithCommand.CommandToSend;
-import katya.common.util.Validator;
 import katya.common.entites.HumanBeing;
 import katya.common.util.Request;
+import katya.common.util.RequestBuilder;
+import katya.common.util.Validator;
 
 public class RequestCreator {
 
@@ -30,80 +31,65 @@ public class RequestCreator {
     }
 
     private Request createRequestWithoutArgs(CommandToSend command) {
-        try {
-            Validator.validateQuantityOfArgs(command.getCommandArgs(), 0);
-            return new Request.RequestBuilder().withName(command.getCommandName()).build();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        Validator.validateQuantityOfArgs(command.getCommandArgs(), 0);
+        return new Request(new RequestBuilder()
+                .withName(command.getCommandName()));
     }
 
     private Request createRequestWithID(CommandToSend command) {
-        try {
-            Validator.validateQuantityOfArgs(command.getCommandArgs(), 1);
-            Long id = new Validator<Long>(command.getCommandArgs()[0]).withCheckingNull(false).withCheckingFunction(Long::parseLong, "значение id должно быть целым числом").withCheckingPredicate(arg -> (Long) arg > 0, "Значение id должно быть больше 0").getValue();
-            return new Request.RequestBuilder().withName(command.getCommandName()).withLongArgument(id).build();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        Validator.validateQuantityOfArgs(command.getCommandArgs(), 1);
+        Long id = new Validator<Long>(command.getCommandArgs()[0]).withCheckingNull(false).withCheckingFunction(Long::parseLong, "значение id должно быть целым числом").withCheckingPredicate(arg -> (Long) arg > 0, "Значение id должно быть больше 0").getValue();
+        return new Request(new RequestBuilder()
+                .withName(command.getCommandName())
+                .withLongArgument(id));
     }
 
     private Request createRequestWithHumanBeing(CommandToSend command) {
-        try {
-            Validator.validateQuantityOfArgs(command.getCommandArgs(), 0);
-            HumanBeing.getGeneratorHumanBeing().generateHumanBeing();
-            return new Request.RequestBuilder().withName(command
-                    .getCommandName())
-                    .withHumanBeingArgument(HumanBeing.getGeneratorHumanBeing().getHumanBeing())
-                    .build();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        Validator.validateQuantityOfArgs(command.getCommandArgs(), 0);
+        HumanBeing.getGeneratorHumanBeing().generateHumanBeing();
+        return new Request(new RequestBuilder()
+                .withName(command.getCommandName())
+                .withHumanBeingArgument(HumanBeing
+                        .getGeneratorHumanBeing()
+                        .getHumanBeing()));
     }
 
     private Request createRequestWithHumanBeingAndId(CommandToSend command) {
-        try {
-            Validator.validateQuantityOfArgs(command.getCommandArgs(), 0);
-            Long id = new Validator<Long>(command.getCommandArgs()[0]).withCheckingNull(false).withCheckingFunction(Long::parseLong, "значение id должно быть целым числом").withCheckingPredicate(arg -> (Long) arg > 0, "Значение id должно быть больше 0").getValue();
-            HumanBeing.getGeneratorHumanBeing().generateHumanBeing();
-            return new Request.RequestBuilder().withName(command.getCommandName()).withLongArgument(id).withHumanBeingArgument(HumanBeing.getGeneratorHumanBeing().getHumanBeing()).build();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+
+        Validator.validateQuantityOfArgs(command.getCommandArgs(), 1);
+        Long id = new Validator<Long>(command.getCommandArgs()[0]).withCheckingNull(false).withCheckingFunction(Long::parseLong, "значение id должно быть целым числом").withCheckingPredicate(arg -> (Long) arg > 0, "Значение id должно быть больше 0").getValue();
+        HumanBeing.getGeneratorHumanBeing().generateHumanBeing();
+        return new Request(new RequestBuilder()
+                .withName(command.getCommandName())
+                .withLongArgument(id)
+                .withHumanBeingArgument(HumanBeing
+                        .getGeneratorHumanBeing()
+                        .getHumanBeing()));
     }
 
     private Request createRequestWithMinutesOfWaiting(CommandToSend command) {
-        try {
-            Validator.validateQuantityOfArgs(command.getCommandArgs(), 0);
-            Integer minutesOfWaiting = new Validator<Integer>(command.getCommandArgs()[0]).withCheckingNull(false).withCheckingFunction(Integer::parseInt, "значение времени ожидания должно быть целым числом").getValue();
-            return new Request.RequestBuilder().withName(command.getCommandName()).withLongArgument(Long.valueOf(minutesOfWaiting)).build();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+
+        Validator.validateQuantityOfArgs(command.getCommandArgs(), 1);
+        Integer minutesOfWaiting = new Validator<Integer>(command.getCommandArgs()[0])
+                .withCheckingNull(false)
+                .withCheckingFunction(Integer::parseInt,
+                        "значение времени ожидания должно быть целым числом").getValue();
+        return new Request(new RequestBuilder()
+                .withName(command.getCommandName())
+                .withIntegerArgument(minutesOfWaiting));
     }
 
     private Request createRequestWithImpactSpeed(CommandToSend command) {
-        try {
-            Validator.validateQuantityOfArgs(command.getCommandArgs(), 0);
-            Double impactSpeed = new Validator<Double>(command.getCommandArgs()[0])
-                    .withCheckingNull(false)
-                    .withCheckingFunction(Double::parseDouble,
-                            "значение скорости удара должно быть вещественным числом")
-                    .withCheckingPredicate(arg -> (Double) arg > HumanBeing.IMPACT_SPEED_MIN,
-                            "Значение скорости удара должно быть больше " + HumanBeing.IMPACT_SPEED_MIN)
-                    .getValue();
-            return new Request.RequestBuilder()
-                    .withName(command.getCommandName())
-                    .withDoubleArgument(impactSpeed)
-                    .build();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        Validator.validateQuantityOfArgs(command.getCommandArgs(), 1);
+        Double impactSpeed = new Validator<Double>(command.getCommandArgs()[0])
+                .withCheckingNull(false)
+                .withCheckingFunction(Double::parseDouble,
+                        "значение скорости удара должно быть вещественным числом")
+                .withCheckingPredicate(arg -> (Double) arg > HumanBeing.IMPACT_SPEED_MIN,
+                        "Значение скорости удара должно быть больше " + HumanBeing.IMPACT_SPEED_MIN)
+                .getValue();
+        return new Request(new RequestBuilder()
+                .withName(command.getCommandName())
+                .withDoubleArgument(impactSpeed));
     }
 }

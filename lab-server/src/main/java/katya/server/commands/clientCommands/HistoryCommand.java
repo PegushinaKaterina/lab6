@@ -2,6 +2,7 @@ package katya.server.commands.clientCommands;
 
 import katya.common.util.Response;
 import katya.common.util.Request;
+import katya.common.util.ResponseBuilder;
 
 import java.util.ArrayDeque;
 
@@ -23,9 +24,8 @@ public class HistoryCommand extends AbstractClientCommand {
         for (String name : queueOfCommands) {
             stringBuilder.append(name).append("\n");
         }
-        return new Response.ResponseBuilder()
-                .withMessageToResponse(String.valueOf(stringBuilder))
-                .build();
+        return new Response(new ResponseBuilder()
+                .withMessageToResponse(String.valueOf(stringBuilder)));
 
     }
 }

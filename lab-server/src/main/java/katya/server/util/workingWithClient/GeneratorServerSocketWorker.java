@@ -1,54 +1,51 @@
 package katya.server.util.workingWithClient;
 
 import katya.common.util.Validator;
-import katya.common.util.CheckBoolean;
 
 import java.net.SocketException;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import static katya.common.util.AnswerAccepter.acceptAnswer;
 
 public class GeneratorServerSocketWorker {
 
     private final int maxPort = 65535;
     private ServerSocketWorker serverSocketWorker;
-    public GeneratorServerSocketWorker(){
-        askForPort();
+
+    public GeneratorServerSocketWorker(Scanner scanner) {
+        askForPort(scanner);
     }
-    private void askForPort() {
+
+    private void askForPort(Scanner scanner) {
         String question = "Вы хотите использовать порт по умолчанию? Введите да/нет";
         System.out.println(question);
         boolean isRunning = true;
+        boolean answer = true;
         while (isRunning) {
             try {
-                boolean answer = inputAnswer();
-                inputPort(answer);
+                answer = acceptAnswer(scanner);
                 isRunning = false;
             } catch (IllegalArgumentException e) {
-                e.getMessage();
+                System.out.println(e.getMessage());
+            }
+        }
+        isRunning = true;
+        while (isRunning) {
+            try {
+                inputPort(answer, scanner);
+                isRunning = false;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            } catch (SocketException e) {
+                System.out.println("Ошибка при установке порта");
             }
         }
     }
 
-    private boolean inputAnswer() throws IllegalArgumentException {
-        Scanner scanner = new Scanner(System.in);
-        boolean answer = true;
-        try (scanner) {
-            String stringAnswer = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
-            answer = new Validator<Boolean>(stringAnswer)
-                    .withCheckingNull(false)
-                    .withCheckingFunction(CheckBoolean::checkBoolean, "Ответ должен быть да/нет")
-                    .getValue();
-        } catch (NoSuchElementException e) {
-            System.out.println("Введен недопустимый символ");
-            System.exit(1);
-        }
-        return answer;
-    }
 
-    private void inputPort(boolean answer) throws IllegalArgumentException {
-        Scanner scanner = new Scanner(System.in);
-        try (scanner) {
+    private void inputPort(boolean answer, Scanner scanner) throws IllegalArgumentException, SocketException {
+        try {
             if (answer) {
                 serverSocketWorker = new ServerSocketWorker();
             } else {
@@ -65,11 +62,10 @@ public class GeneratorServerSocketWorker {
         } catch (NoSuchElementException e) {
             System.out.println("Введен недопустимый символ");
             System.exit(1);
-        } catch (SocketException e) {
-            e.printStackTrace();
         }
     }
-    public ServerSocketWorker getServerSocketWorker(){
+
+    public ServerSocketWorker getServerSocketWorker() {
         return serverSocketWorker;
     }
 }

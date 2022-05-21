@@ -1,4 +1,4 @@
-package katya.server.commands.serverCommands;
+package katya.server;
 
 public abstract class AbstractServerCommand {
     private final String name; // Имя

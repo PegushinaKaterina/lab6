@@ -1,7 +1,8 @@
 package katya.server.commands.clientCommands;
 
-import katya.common.util.Response;
 import katya.common.util.Request;
+import katya.common.util.Response;
+import katya.common.util.ResponseBuilder;
 import katya.server.entites.CollectionManager;
 
 public class RemoveAllByMinutesOfWaitingCommand extends AbstractClientCommand {
@@ -19,8 +20,15 @@ public class RemoveAllByMinutesOfWaitingCommand extends AbstractClientCommand {
 
     @Override
     public Response executeCommand(Request request) {
-        return new Response.ResponseBuilder()
-                .withMessageToResponse(String.valueOf(collectionManager.removeAllByMinutesOfWaiting(request.getIntegerArgument())))
-                .build();
+        try {
+            return new Response(new ResponseBuilder()
+                    .withMessageToResponse(String.valueOf(collectionManager
+                            .removeAllByMinutesOfWaiting(request
+                                    .getIntegerArgument()))));
+        } catch (IllegalArgumentException e) {
+            return new Response(new ResponseBuilder()
+                    .withMessageToResponse(e.getMessage()));
+        }
+
     }
 }

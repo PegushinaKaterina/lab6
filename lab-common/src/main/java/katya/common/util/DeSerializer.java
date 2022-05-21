@@ -11,17 +11,15 @@ public final class DeSerializer {
     }
 
     public static Request deSerializeRequest(byte[] acceptedBuf) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(acceptedBuf);
-        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        try (byteArrayInputStream; objectInputStream) {
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(acceptedBuf);
+             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
             return (Request) objectInputStream.readObject();
         }
     }
 
     public static Response deSerializeResponse(ByteBuffer byteBuffer) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
-        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        try (byteArrayInputStream; objectInputStream) {
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
+             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
             return (Response) objectInputStream.readObject();
         }
     }

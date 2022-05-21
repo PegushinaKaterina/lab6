@@ -1,22 +1,25 @@
 package katya.server.util;
 
-import katya.server.util.workingWithCommand.ServerCommandListener;
 import katya.server.util.workingWithCommand.CommandManager;
+import katya.server.util.workingWithCommand.ServerCommandListener;
+
+import java.util.Scanner;
 
 public class ConsoleThread extends Thread {
     private final ServerCommandListener commandListener;
     private final CommandManager commandManager;
+    private final Scanner scanner;
 
-    public ConsoleThread(ServerCommandListener commandListener, CommandManager commandManager) {
+    public ConsoleThread(ServerCommandListener commandListener, CommandManager commandManager, Scanner scanner) {
         this.commandListener = commandListener;
         this.commandManager = commandManager;
+        this.scanner = scanner;
     }
 
     public void run() {
         while (commandManager.getStatusOfCommandListening()) {
-            System.out.println("11111111");
-            String command = commandListener.readCommand();
-            commandManager.executeServerCommand(command);
+            String command = commandListener.readCommand(scanner);
+            System.out.println(commandManager.executeServerCommand(command));
         }
     }
 }

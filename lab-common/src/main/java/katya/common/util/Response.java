@@ -2,18 +2,19 @@ package katya.common.util;
 
 import katya.common.entites.HumanBeing;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public final class Response {
+public final class Response implements Serializable {
 
     private final String messageToResponse;
     private final HumanBeing humanBeingToResponse;
     private final LinkedList<HumanBeing> collectionToResponse;
 
-    private Response(ResponseBuilder responseBuilder) {
-        this.messageToResponse = responseBuilder.messageToResponse;
-        this.humanBeingToResponse = responseBuilder.humanBeingToResponse;
-        this.collectionToResponse = responseBuilder.collectionToResponse;
+    public Response(ResponseBuilder responseBuilder) {
+        this.messageToResponse = responseBuilder.getMessageToResponse();
+        this.humanBeingToResponse = responseBuilder.getHumanBeingToResponse();
+        this.collectionToResponse = responseBuilder.getCollectionToResponse();
     }
 
     public String getMessageToResponse() {
@@ -38,40 +39,18 @@ public final class Response {
     public String toString() {
         StringBuilder collection = new StringBuilder();
         if (!(collectionToResponse == null)) {
-            for (HumanBeing humanBeing : collectionToResponse) {
-                collection.append(humanBeing.toString()).append("\n");
+            if (collectionToResponse.isEmpty()) {
+                collection.append("Коллекция пуста");
+            } else {
+                for (HumanBeing humanBeing : collectionToResponse) {
+                    collection.append(humanBeing.toString()).append("\n");
+                }
             }
+
             return String.valueOf(collection);
         }
         return (messageToResponse == null ? "" : messageToResponse)
                 + (humanBeingToResponse == null ? "" : "\n" + humanBeingToResponse)
-                + ((collectionToResponse == null) ? "" : "\n"
-                + collection);
-    }
-
-    public static class ResponseBuilder {
-        private String messageToResponse;
-        private HumanBeing humanBeingToResponse;
-        private LinkedList<HumanBeing> collectionToResponse;
-
-        public ResponseBuilder withMessageToResponse(String messageToResponse) {
-            this.messageToResponse = messageToResponse;
-            return this;
-        }
-
-        public ResponseBuilder withHumanBeingToResponse(HumanBeing humanBeingToResponse) {
-            this.humanBeingToResponse = humanBeingToResponse;
-            return this;
-        }
-
-        public ResponseBuilder withCollectionToResponse(LinkedList<HumanBeing> collectionToResponse) {
-            this.collectionToResponse = collectionToResponse;
-            return this;
-        }
-
-        public Response build() {
-            return new Response(this);
-        }
-
+                + "\n" + collection;
     }
 }

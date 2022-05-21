@@ -1,15 +1,16 @@
-package katya.server.util.workingWithCommand;
+package katya.server;
 
 import katya.server.commands.clientCommands.*;
-import katya.server.commands.serverCommands.AbstractServerCommand;
+import katya.server.AbstractServerCommand;
 import katya.server.commands.serverCommands.ExitCommand;
 import katya.server.commands.serverCommands.SaveCommand;
 import katya.server.commands.serverCommands.ServerHelpCommand;
 import katya.server.entites.CollectionManager;
+import katya.server.util.workingWithCommand.CommandManager;
 
 import java.util.HashMap;
 
-public final class AvailableCommands {
+public class AvailableCommands {
     public static final HashMap<String, AbstractClientCommand> CLIENT_AVAILABLE_COMMANDS = new HashMap<>();
     public static final HashMap<String, AbstractServerCommand> SERVER_AVAILABLE_COMMANDS = new HashMap<>();
 
@@ -23,7 +24,7 @@ public final class AvailableCommands {
         AbstractClientCommand clearCommand = new ClearCommand(collectionManager);
         AbstractClientCommand removeHead = new RemoveHeadCommand(collectionManager);
         AbstractClientCommand removeLower = new RemoveLoverCommand(collectionManager);
-        AbstractClientCommand historyCommand = new HistoryCommand(CommandManager.commandHistory.getHistory());
+        AbstractClientCommand historyCommand = new HistoryCommand(CommandManager.getCommandHistory().getHistory());
         AbstractClientCommand removeAllByMinutesOfWaiting = new RemoveAllByMinutesOfWaitingCommand(collectionManager);
         AbstractClientCommand sumOfMinutesOfWaiting = new SumOfMinutesOfWaitingCommand(collectionManager);
         AbstractClientCommand countByImpactSpeed = new CountByImpactSpeedCommand(collectionManager);

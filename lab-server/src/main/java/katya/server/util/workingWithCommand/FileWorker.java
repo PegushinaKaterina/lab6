@@ -5,6 +5,7 @@ import katya.server.entites.CollectionManager;
 
 import java.io.*;
 
+
 public class FileWorker {
     private final File file;
 
@@ -26,9 +27,8 @@ public class FileWorker {
     }
 
     public void fileWriter(CollectionManager collectionManager) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
-        try (fileOutputStream; outputStreamWriter) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file);
+             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream)) {
             for (int i = 0; i < collectionManager.getCollectionHumanBeing().size(); i++) {
                 String string = Parser.humanBeingToStringParser(collectionManager.getCollectionHumanBeing().get(i));
                 outputStreamWriter.write(string);

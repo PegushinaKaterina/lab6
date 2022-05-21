@@ -8,28 +8,27 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class GeneratorCollectionManager {
-    private CollectionManager collectionHumanBeing;
+    private final CollectionManager collectionManager;
 
     public GeneratorCollectionManager(FileWorker fileWorker) throws FileNotFoundException {
-        collectionHumanBeing = new CollectionManager(fileWorker);
+        collectionManager = new CollectionManager(fileWorker);
         Scanner scanner = new Scanner(fileWorker.getFile());
+        HumanBeing.getGeneratorHumanBeing().changeState(new FileGeneratorHumanBeing(scanner));
         int i = 1;
-        try (scanner) {
-            while (scanner.hasNextLine()) {
-                System.out.println("Человек №" + i + ":");
-                try {
-                    HumanBeing.getGeneratorHumanBeing().generateHumanBeing();
-                    System.out.println(collectionHumanBeing.add(HumanBeing.getGeneratorHumanBeing().getHumanBeing()));
-
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                }
-                i++;
+        while (scanner.hasNextLine()) {
+            System.out.println("Человек №" + i + ":");
+            try {
+                HumanBeing.getGeneratorHumanBeing().generateHumanBeing();
+                System.out.println(collectionManager.add(HumanBeing.getGeneratorHumanBeing().getHumanBeing()));
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
+            i++;
         }
+        scanner.close();
     }
 
-    public CollectionManager getCollectionHumanBeing() {
-        return collectionHumanBeing;
+    public CollectionManager getCollectionManager() {
+        return collectionManager;
     }
 }

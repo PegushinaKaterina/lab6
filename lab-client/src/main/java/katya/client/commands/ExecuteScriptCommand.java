@@ -12,16 +12,11 @@ import katya.common.util.Validator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 
-/**
- * Класс команды: execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
- */
 public final class ExecuteScriptCommand {
-    private static CommandListener commandListener;
-    private static HashSet<String> hashSet = new HashSet<String>();
+    private static final HashSet<String> HASH_SET = new HashSet<>();
 
     private ExecuteScriptCommand() {
     }
@@ -31,18 +26,17 @@ public final class ExecuteScriptCommand {
             Validator.validateQuantityOfArgs(commandArgs, 1);
             String fileName = commandArgs[0];
             File file = checkScript(fileName);
-            hashSet.add(fileName);
+            HASH_SET.add(fileName);
             Scanner scanner = new Scanner(file);
             HumanBeing.getGeneratorHumanBeing().changeState(new ScriptGeneratorHumanBeing(scanner));
-            commandListener = CommandManager.getCommandListener();
-            try (scanner) {
-                do {
-                    CommandToSend command = commandListener.readCommandFromScript(scanner);
-                    CommandManager.performCommand(command, clientSocketWorker);
-                } while (scanner.hasNextLine());
-                hashSet.remove(commandArgs[0]);
-            }
-        } catch (IllegalArgumentException | IOException e) {
+            CommandListener commandListener = CommandManager.getCommandListener();
+            do {
+                CommandToSend command = commandListener.readCommandFromScript(scanner);
+                CommandManager.performCommand(command, clientSocketWorker);
+            } while (scanner.hasNextLine());
+            HASH_SET.remove(commandArgs[0]);
+            scanner.close();
+        } catch (IllegalArgumentException | FileNotFoundException e) {
             System.out.println(e.getMessage());
         } finally {
             Scanner scanner = new Scanner(System.in);
@@ -51,8 +45,8 @@ public final class ExecuteScriptCommand {
         }
     }
 
-    private static File checkScript(String fileName) throws IllegalArgumentException, IOException {
-        if (hashSet.contains(fileName)) {
+    private static File checkScript(String fileName) throws IllegalArgumentException, FileNotFoundException {
+        if (HASH_SET.contains(fileName)) {
             throw new IllegalArgumentException("Возможно зацикливание");
         }
         File file = new File(fileName);

@@ -2,6 +2,7 @@ package katya.server.commands.clientCommands;
 
 import katya.common.util.Response;
 import katya.common.util.Request;
+import katya.common.util.ResponseBuilder;
 
 import java.util.HashMap;
 
@@ -23,8 +24,7 @@ public class ClientHelpCommand extends AbstractClientCommand {
         for (AbstractClientCommand command : availableCommands.values()) {
             stringBuilder.append(command.toString()).append("\n");
         }
-        return new Response.ResponseBuilder()
-                .withMessageToResponse(String.valueOf(stringBuilder))
-                .build();
+        return new Response(new ResponseBuilder()
+                .withMessageToResponse(String.valueOf(stringBuilder)));
     }
 }

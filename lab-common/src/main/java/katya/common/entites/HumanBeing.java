@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class HumanBeing implements Comparable<HumanBeing>, Serializable {
     public static final Double IMPACT_SPEED_MIN = -484.;
-    private static GeneratorHumanBeing generatorHumanBeing = new GeneratorHumanBeing();
+    private static final GeneratorHumanBeing GENERATOR_HUMAN_BEING = new GeneratorHumanBeing();
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private final String name;
@@ -19,16 +19,16 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
     private final Integer minutesOfWaiting;
     private final WeaponType weaponType;
     private final Car car;
-    private HumanBeing(HumanBeingBuilder builder) {
-        this.name = builder.name;
-        this.coordinates = builder.coordinates;
-        this.realHero = builder.realHero;
-        this.hasToothpick = builder.hasToothpick;
-        this.impactSpeed = builder.impactSpeed;
-        this.soundtrackName = builder.soundtrackName;
-        this.minutesOfWaiting = builder.minutesOfWaiting;
-        this.weaponType = builder.weaponType;
-        this.car = builder.car;
+    public HumanBeing(HumanBeingBuilder humanBeingBuilder) {
+        this.name = humanBeingBuilder.getName();
+        this.coordinates = humanBeingBuilder.getCoordinates();
+        this.realHero = humanBeingBuilder.getRealHero();
+        this.hasToothpick = humanBeingBuilder.isHasToothpick();
+        this.impactSpeed = humanBeingBuilder.getImpactSpeed();
+        this.soundtrackName = humanBeingBuilder.getSoundtrackName();
+        this.minutesOfWaiting = humanBeingBuilder.getMinutesOfWaiting();
+        this.weaponType = humanBeingBuilder.getWeaponType();
+        this.car = humanBeingBuilder.getCar();
     }
 
     public void setId(Long id) {
@@ -84,7 +84,7 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
     }
 
     public static GeneratorHumanBeing getGeneratorHumanBeing() {
-        return generatorHumanBeing;
+        return GENERATOR_HUMAN_BEING;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
 
     @Override
     public String toString() {
-        return "Человек с именем " + name + "\n"
+        return "Человек с именем " + name + ", id - " + id + "\n"
                 + "   Скорость удара: " + impactSpeed
                 + ", время ожидания: " + minutesOfWaiting;
         /*
@@ -128,67 +128,5 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
                 ", Тип оружия:" + weaponType + "\n";
                 */
     }
-
-    public static class HumanBeingBuilder {
-        private String name;
-        private Coordinates coordinates;
-        private Boolean realHero;
-        private boolean hasToothpick;
-        private Double impactSpeed;
-        private String soundtrackName;
-        private Integer minutesOfWaiting;
-        private WeaponType weaponType;
-        private Car car = new Car(null);
-
-        public HumanBeingBuilder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public HumanBeingBuilder withCoordinates(int x, int y) {
-            this.coordinates = new Coordinates(x, y);
-            return this;
-        }
-
-        public HumanBeingBuilder withRealHero(Boolean realHero) {
-            this.realHero = realHero;
-            return this;
-        }
-
-        public HumanBeingBuilder withHasToothpick(boolean hasToothpick) {
-            this.hasToothpick = hasToothpick;
-            return this;
-        }
-
-        public HumanBeingBuilder withImpactSpeed(Double impactSpeed) {
-            this.impactSpeed = impactSpeed;
-            return this;
-        }
-
-        public HumanBeingBuilder withSoundtrackName(String soundtrackName) {
-            this.soundtrackName = soundtrackName;
-            return this;
-        }
-
-        public HumanBeingBuilder withMinutesOfWaiting(Integer minutesOfWaiting) {
-            this.minutesOfWaiting = minutesOfWaiting;
-            return this;
-        }
-
-        public HumanBeingBuilder withWeaponType(WeaponType weaponType) {
-            this.weaponType = weaponType;
-            return this;
-        }
-
-        public HumanBeingBuilder withCar(Boolean cool) {
-            this.car = new Car(cool);
-            return this;
-        }
-
-        public HumanBeing build() {
-            return new HumanBeing(this);
-        }
-    }
-
 }
 

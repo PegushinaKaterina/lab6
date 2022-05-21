@@ -3,7 +3,6 @@ package katya.client.util.workingWithServer;
 import katya.common.util.Response;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 
 public final class ReceiveResponse {
     private ReceiveResponse() {
@@ -11,15 +10,26 @@ public final class ReceiveResponse {
 
     public static void receiveResponse(ClientSocketWorker clientSocketWorker) {
         try {
-            Response response = clientSocketWorker.receiveResponse();
-            System.out.println(response.toString());
-        } catch (SocketTimeoutException e) {
-            System.out.println(("The waiting time for a response from the server has been exceeded, try again later"));
+            Response response = null;
+            for (int i = 0; i < 50 && response == null; i++) {
+                try {
+                    System.out.println("Ждем ответ от сервера...");
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                response = clientSocketWorker.receiveResponse();
+            }
+            if (response == null) {
+                System.out.println("Превышено время ожидания ответа от сервера");
+                return;
+            }
+            System.out.println(response);
         } catch (IOException e) {
-            System.out.println(("An error occurred while receiving a response from the server"));
+            System.out.println(("Произошла ошибка при получении ответа от сервера"));
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            System.out.println(("The response came damaged"));
+            System.out.println(("Пришел некорректный ответ от сервера"));
         }
     }
 }

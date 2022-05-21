@@ -1,7 +1,6 @@
 package katya.client.util.workingWithCommand;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +12,6 @@ public final class AvailableCommands {
     public static final Set<String> COMMANDS_WITH_HUMAN_BEING_AND_ID_ARGS = new HashSet<>();
     public static final Set<String> COMMANDS_WITH_MINUTES_OF_WAITING_ARG = new HashSet<>();
     public static final Set<String> COMMANDS_WITH_IMPACT_SPEED_ARG = new HashSet<>();
-    public static final HashMap<String, Runnable> CLIENTS_COMMANDS = new HashMap<>();
 
     static {
         Collections.addAll(COMMANDS_WITHOUT_ARGS,
@@ -23,7 +21,8 @@ public final class AvailableCommands {
                 "clear",
                 "exit",
                 "remove_head",
-                "history"
+                "history",
+                "sum_of_minutes_of_waiting"
         );
         Collections.addAll(COMMANDS_WITH_HUMAN_BEING_ARG,
                 "add",
@@ -36,7 +35,7 @@ public final class AvailableCommands {
                 "remove_by_id"
         );
         Collections.addAll(COMMANDS_WITH_MINUTES_OF_WAITING_ARG,
-                "sum_of_minutes_of_waiting"
+                "remove_all_by_minutes_of_waiting"
         );
         Collections.addAll(COMMANDS_WITH_IMPACT_SPEED_ARG,
                 "count_by_impact_speed"

@@ -16,7 +16,7 @@ public final class CommandManager {
     private CommandManager() {
     }
 
-    public static void performCommandd(Scanner scanner, ClientSocketWorker clientSocketWorker) {
+    public static void runConsoleCycle(Scanner scanner, ClientSocketWorker clientSocketWorker) {
         while (statusOfCommandListening) {
             CommandToSend command = COMMAND_LISTENER.readCommandFromConsole(scanner);
             performCommand(command, clientSocketWorker);
@@ -30,7 +30,7 @@ public final class CommandManager {
         } else if ("execute_script".equals(command.getCommandName())) {
             ExecuteScriptCommand.executeCommand(command.getCommandArgs(), clientSocketWorker);
         } else if (SendRequest.sendRequest(command, clientSocketWorker)) {
-            ReceiveResponse.receiveResponse(clientSocketWorker);
+                ReceiveResponse.receiveResponse(clientSocketWorker);
         }
     }
 

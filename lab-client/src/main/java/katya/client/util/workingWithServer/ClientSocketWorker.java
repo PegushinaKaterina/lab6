@@ -14,21 +14,19 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
 public class ClientSocketWorker {
-    private static final int DEFAULT_PORT = 324;
+    private static final int DEFAULT_PORT = 1337;
     private final DatagramChannel datagramChannel;
     private SocketAddress socketAddress;
     private InetAddress host;
-    private int port;
+    private int port = DEFAULT_PORT;
 
     private String address = "localhost";
 
     public ClientSocketWorker() throws IOException {
-        port = DEFAULT_PORT;
         host = InetAddress.getByName(address);
         socketAddress = new InetSocketAddress(host, port);
         datagramChannel = DatagramChannel.open();
-        datagramChannel.configureBlocking(false);
-        datagramChannel.bind(socketAddress);
+        datagramChannel.bind(null);
         datagramChannel.configureBlocking(false);
     }
 
@@ -37,13 +35,19 @@ public class ClientSocketWorker {
     }
 
     public void sendRequest(Request request) throws IOException {
-        ByteBuffer bufferToSend = Serializer.serializeRequest(request);
-        datagramChannel.send(bufferToSend, socketAddress);
+        try {
+            ByteBuffer bufferToSend = Serializer.serializeRequest(request);
+            datagramChannel.send(bufferToSend, socketAddress);
+        } catch (IOException e) {
+            throw new IOException("Произошла ошибка при отправке запроса");
+        }
     }
 
     public Response receiveResponse() throws ClassNotFoundException, IOException {
-        int receivedSize = datagramChannel.socket().getReceiveBufferSize();
-        ByteBuffer bufferToReceive = ByteBuffer.allocate(receivedSize);
+        int receivedSize;
+        ByteBuffer bufferToReceive;
+        receivedSize = datagramChannel.socket().getReceiveBufferSize();
+        bufferToReceive = ByteBuffer.allocate(receivedSize);
         SocketAddress socketAddress = datagramChannel.receive(bufferToReceive);
         if (socketAddress == null) {
             return null;

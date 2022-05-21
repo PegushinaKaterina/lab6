@@ -19,9 +19,9 @@ public class FileGeneratorHumanBeing extends State {
     }
 
     @Override
-    protected void generateHumanBeingFields() {
+    public void generateHumanBeingFields() {
         try {
-            stringHumanBeing = Parser.stringToHumanBeingStringParserFromFile(super.scanner);
+            stringHumanBeing = Parser.stringToHumanBeingStringParserFromFile(super.getScanner());
             Validator.validateQuantityOfArgs(stringHumanBeing, QUANTITY_OF_ARGS);
             setName();
             setCoordinates();
@@ -33,129 +33,129 @@ public class FileGeneratorHumanBeing extends State {
             setWeaponType();
             setCar();
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 
     @Override
     public boolean isCorrect() {
-        return errors.isEmpty();
+        return getErrors().isEmpty();
     }
 
     public void errorHandler() {
-        while (!errors.isEmpty()) {
-            System.out.println(errors.remove());
+        while (!getErrors().isEmpty()) {
+            System.out.println(getErrors().remove());
         }
     }
 
     public void setName() {
         try {
-            super.name = new Validator<String>(stringHumanBeing[0])
+            super.setName(new Validator<String>(stringHumanBeing[0])
                     .withCheckingNull(false)
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 
     public void setCoordinates() {
         try {
-            super.x = new Validator<Integer>(stringHumanBeing[1])
+            super.setX(new Validator<Integer>(stringHumanBeing[1])
                     .withCheckingNull(false)
                     .withCheckingFunction(Integer::parseInt, "значение координаты X должно быть целым числом")
                     .withCheckingPredicate(arg -> (int) arg < Coordinates.X_MAX,
                             "Значение координаты X должно быть не больше " + Coordinates.X_MAX)
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
         try {
-            super.y = new Validator<Integer>(stringHumanBeing[2])
+            super.setY(new Validator<Integer>(stringHumanBeing[2])
                     .withCheckingNull(false)
                     .withCheckingFunction(Integer::parseInt, "значение координаты Y должно быть целым числом")
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 
     public void setRealHero() {
         try {
-            super.realHero = new Validator<Boolean>(stringHumanBeing[3])
+            super.setRealHero(new Validator<Boolean>(stringHumanBeing[3])
                     .withCheckingNull(false)
                     .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"Это реальный герой\" должно быть Да или Нет")
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 
     public void setHasToothpick() {
         try {
-            super.hasToothpick = new Validator<Boolean>(stringHumanBeing[4])
+            super.setHasToothpick(new Validator<Boolean>(stringHumanBeing[4])
                     .withCheckingNull(false)
                     .withCheckingFunction(CheckBoolean::checkBoolean, "значение \"У человека есть зубочистка\" должно быть Да или Нет")
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 
     public void setImpactSpeed() {
         try {
-            super.impactSpeed = new Validator<Double>(stringHumanBeing[5])
+            super.setImpactSpeed(new Validator<Double>(stringHumanBeing[5])
                     .withCheckingNull(false)
                     .withCheckingFunction(Double::parseDouble, "значение скорости удара должно быть вещественным числом")
                     .withCheckingPredicate(arg -> (Double) arg > HumanBeing.IMPACT_SPEED_MIN,
                             "Значение скорости удара должно быть больше " + HumanBeing.IMPACT_SPEED_MIN)
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 
     public void setSoundtrackName() {
         try {
-            super.soundtrackName = new Validator<String>(stringHumanBeing[6])
+            super.setSoundtrackName(new Validator<String>(stringHumanBeing[6])
                     .withCheckingNull(false)
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 
     public void setMinutesOfWaiting() {
         try {
-            super.minutesOfWaiting = new Validator<Integer>(stringHumanBeing[7])
+            super.setMinutesOfWaiting(new Validator<Integer>(stringHumanBeing[7])
                     .withCheckingNull(false)
                     .withCheckingFunction(Integer::parseInt, "значение времени ожидания должно быть целым числом")
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 
     public void setWeaponType() {
         try {
-            super.weaponType = new Validator<WeaponType>(stringHumanBeing[8])
+            super.setWeaponType(new Validator<WeaponType>(stringHumanBeing[8])
                     .withCheckingNull(false)
                     .withCheckingFunction(WeaponType::valueOf,
                             "тип оружия должен быть из списка: \n" + WeaponType.show() + "Регистр должен сохраняться")
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 
     public void setCar() {
         try {
-            super.cool = new Validator<Boolean>(stringHumanBeing[9])
+            super.setCool(new Validator<Boolean>(stringHumanBeing[9])
                     .withCheckingNull(true)
                     .withCheckingFunction(CheckBoolean::checkBoolean,
                             "значение \"У человека есть крутая машина\" должно быть Да или Нет, или быть пустым")
-                    .getValue();
+                    .getValue());
         } catch (IllegalArgumentException e) {
-            super.errors.add(e.getMessage());
+            super.getErrors().add(e.getMessage());
         }
     }
 }
